@@ -1,0 +1,19 @@
+/* Updated CSS for Specimen Container */
+.specimen-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .specimen-item {
+    background-color: rgba(140, 198, 63, 0.15); /* Herb-style background color with 15% opacity */
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #8cc63f; /* Border color for specimen items */
+    border-radius: 8px;
+    width: calc(33.333% - 20px);
+    box-sizing: border-box;
+  }
+  
+  

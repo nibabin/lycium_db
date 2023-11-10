@@ -1,0 +1,35 @@
+/* CSS for Filter Form */
+.filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #8cc63f; /* Green background color */
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .filter select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #fff; /* White border */
+    border-radius: 4px;
+    margin-right: 10px;
+    background-color: rgba(255, 255, 255, 0.8); /* White background with 80% opacity */
+  }
+  
+  .filter label {
+    color: #fff; /* White text color */
+    font-family: 'Cursive', sans-serif; /* Choose a cursive or herb-style font */
+    font-size: 16px;
+  }
+  
+  .filter input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #fff; /* White border */
+    border-radius: 4px;
+    margin-left: 10px;
+  }
+  
+  /* Add additional styling for the form as needed */
+  
