@@ -15,5 +15,31 @@
     width: calc(33.333% - 20px);
     box-sizing: border-box;
   }
+
+
+  /* HerbStyle.css */
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+  }
+  
+  button {
+    background-color: #4CAF50; /* Green background color */
+    color: rgb(62, 106, 0); /* White text color */
+    padding: 10px 20px; /* Padding for better visual appearance */
+    font-size: 16px; /* Font size */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-color:  rgb(62, 106, 0);
+  }
+  
+  button:hover {
+    background-color: #45a049; /* Darker green on hover */
+    color: white;
+  }
+  
   
   

@@ -18,12 +18,18 @@ export default function SpecimenList(){
         try{
             const data = await SpecimenAPI.getAllSpecimen()
             setSpecimen(data)
+            console.log(data[0])
 
         }catch(error){
             console.error('Error catching specimen:', error)
         }
 
     }
+
+    const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ];
 
 
 
@@ -32,12 +38,21 @@ export default function SpecimenList(){
             {specimen.map(s =>{
                 return(
                 <div className='specimen-item'>
-                    <p>{s.collection_date}</p>
-                    <p>{s.specimen_id}</p>
-                    
+                    <p><strong>Species:</strong> {s.species}</p>
+                    <p><strong>Genus:</strong> {s.genus}</p>
+                    <p><strong>Collection Date:</strong> {new Date(s.collection_date).getDate()} {monthNames[new Date(s.collection_date).getMonth()]} {new Date(s.collection_date).getFullYear()}</p>
+                    <p><strong>Collection Location:</strong> {s.state_provenance}, {s.country}</p>  
+
+                    <div className='buttons'>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </div>  
                 </div>
+
+                
                 )
             })}
+
         </div>
     )
 }
