@@ -3,6 +3,7 @@ import path from 'path'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import SpecimenRouter from './routes/specimen.js';
+import GenomicsRouter from './routes/genomics.js';
 
 
 dotenv.config()
@@ -21,6 +22,8 @@ app.get('/', (request, response) => {
 })
 
 app.use('/specimen', SpecimenRouter)
+
+app.use('/genomics', GenomicsRouter);
 
 
 app.listen(PORT, () => {
