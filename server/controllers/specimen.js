@@ -36,6 +36,8 @@ const getSpecimenInfoById = async(req, res) =>{
 
 
 
+
+
 export default{
     getSpecimen,
     getSpecimenInfoById
