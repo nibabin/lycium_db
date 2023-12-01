@@ -1,50 +1,36 @@
-/* Updated CSS for Header with Herb Style Font and Green/Yellow Colors */
+.header{
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  align-items: center;
+  padding: 20px;
+}
 
-.header {
-    background-color: #8cc63f; /* Green background color */
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .header h1 {
-    margin: 0;
-    color: #fff; /* White text color */
-    font-family: 'Cursive', sans-serif; /* Choose a cursive or herb-style font */
-    font-size: 36px;
-    letter-spacing: 2px; /* Adjust letter spacing as needed */
-  }
+.navigation{
+  width: 100vw;
+  background-color: black;
+  display: flex;
+  color:white;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  /* CSS for Navigation */
-nav {
-    background-color: #8cc63f; /* Green background color */
-    padding: 10px;
-    text-align: center;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  li {
-    color: #fff;
-    display: inline-block;
-    margin-right: 20px; /* Adjust spacing between navigation items as needed */
-  }
-  
-  a {
-    text-decoration: none;
-    color: #fff; /* White text color */
-    font-family: 'Cursive', sans-serif; /* Choose a cursive or herb-style font */
-    font-size: 18px; /* Adjust font size as needed */
-  }
-  
-  a:hover {
-    text-decoration: underline; /* Underline on hover */
-  }
-  
-  
-  
+.options{
+  display: flex;
+  text-decoration: none;
+  list-style-type: none;
+  align-items: center;
+}
 
-  
+.option{
+  padding: 0px 30px;
+  color: white;
+}
+
+.button{
+  margin: 20px;
+}
+
+a:hover{
+  color:blue
+}

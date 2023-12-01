@@ -1,80 +1,131 @@
-import React from 'react'
-import '../css/TableView.css'
-import SpecimenAPI from '../../services/SpecimenAPI';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import SpecimenAPI from '../../services/SpecimenAPI'; // Adjust the import path as necessary
+import {
+    flexRender,
+    getCoreRowModel,
+    getSortedRowModel,
+    useReactTable,
+  } from '@tanstack/react-table'
+  import '../css/TableView.css'
 
-export default function TableView(){
+function TableView() {
+  const [specimen, setSpecimen] = useState([]);
 
-    const [specimen, setSpecimen] = useState([]);
-
-    useEffect(()=>{
-        fetchSpecimen()
-
-    }, [SpecimenAPI])
+  const [sorting, setSorting] = useState([])
 
 
+  useEffect(() => {
+    const fetchSpecimen = async () => {
+      try {
+        const data = await SpecimenAPI.getAllSpecimen();
+        setSpecimen(data);
+      } catch (error) {
+        console.error('Error fetching specimen:', error);
+      }
+    };
 
-    const fetchSpecimen = async() =>{
-        try{
-            const data = await SpecimenAPI.getAllSpecimen()
-            setSpecimen(data)
+    fetchSpecimen();
+  }, []);
 
-        }catch(error){
-            console.error('Error catching specimen:', error)
-        }
+  const columns = useMemo(
+    () => [
+      { accessorKey: 'genus', header: 'Genus' },
+      { accessorKey: 'species', header: 'Species' },
+      { accessorKey: 'field_pop_id', header: 'Field ID' },
+      { accessorKey: 'greenhouse', header: 'Greenhouse' },
+      { accessorKey: 'voucher_specimen', header: 'Voucher' },
+      { accessorKey: 'collection_date', header: 'Collection Date' },
+      { accessorKey: 'provenance', header: 'Provenance' },
+      { accessorKey: 'country', header: 'Country' },
+      { accessorKey: 'state_province', header: 'State' },
+      { accessorKey: 'specific_locality', header: 'Specific Local' },
+      { accessorKey: 'latitude', header: 'Latitude' },
+      { accessorKey: 'longitude', header: 'Longitude' },
+      { accessorKey: 'notes', header: 'Notes' },
+      { accessorKey: 'material', header: 'Material' },
+      { accessorKey: 'nanodrop_concentration', header: 'Nanodrop Concentration' },
+      { accessorKey: 'nanodrop_ratio', header: 'Nanodrop Ratio' },
+      { accessorKey: 'published ', header: 'Published' },
 
-    }
 
-    return(
-        <table className="table">
-            <thead>
-                <tr>               
-                    <th>DNA Extractions</th>
-                    <th>GENUS</th>
-                    <th>SPECIES</th>
-                    <th>FIELD_POP ID</th>
-                    <th>GREENHOUSE</th>
-                    <th>VOUCHER SPECIMEN</th>
-                    <th>COLLECTION DATE</th>
-                    <th>PROVENANCE</th>
-                    <th>COUNTRY</th>
-                    <th>STATE_PROVINCE</th>
-                    <th>SPECIFIC LOCALITY</th>
-                    <th>LATITUDE</th>
-                    <th>LONGITUDE</th>
-                    <th>NOTES</th>
-                    <th>MATERIAL</th>
-                    <th>NANODROP CONCENTRATION (ng/uL)</th>
-                    <th>NANODROP 260:280 RATIO</th>
-                    <th>PUBLISHED</th>
+    ],
+    []
+  );
 
+  const table = useReactTable({
+    data: specimen,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+  });
+
+  return (
+    <div className="tableDiv">
+      <div />
+      <table>
+        <thead>
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <th className="tableHeader" key={header.id} colSpan={header.colSpan}>
+                    {header.isPlaceholder ? null : (
+                      <div
+                        {...{
+                          className: header.column.getCanSort()
+                            ? 'sortHeader'
+                            : '',
+                          onClick: header.column.getToggleSortingHandler(),
+                        }}
+                      >
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                        {{
+                          asc: ' 🔼',
+                          desc: ' 🔽',
+                        }[header.column.getIsSorted()] ?? null}
+                      </div>
+                    )}
+                  </th>
+                )
+              })}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table
+            .getRowModel()
+            .rows.slice(0, 10)
+            .map(row => {
+              return (
+                <tr key={row.id}>
+                  {row.getVisibleCells().map(cell => {
+                    return (
+                      <td className="tableCell"  key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </td>
+                    )
+                  })}
                 </tr>
-            </thead>
-
-            <tbody>
-                {specimen.map((item, index) => (
-                <tr key={index}>
-                    <td>Add Extractions</td>
-                    <td>{item.genus}</td>
-                    <td>{item.species}</td>
-                    <td>{item.field_pop_id}</td>
-                    <td>{item.greenhouse}</td>
-                    <td>{item.voucher_specimen}</td>
-                    <td>{item.collection_date}</td>
-                    <td>{item.provenance}</td>
-                    <td>{item.country}</td>
-                    <td>{item.state_province}</td>
-                    <td>{item.specific_locality}</td>
-                    <td>{item.latitude}</td>
-                    <td>{item.longitude}</td>
-                    <td>{item.notes}</td>
-                    <td>{item.material}</td>
-                    <td>{item.nanodrop_concentration}</td>
-                    <td>{item.nanodrop_ratio}</td>
-                    <td>{item.published ? 'Yes' : 'No'}</td>
-                </tr>
-                ))}
-            </tbody>
-        </table>
-    )
+              )
+            })}
+        </tbody>
+      </table>
+      <div>{table.getRowModel().rows.length} Rows</div>
+      <div>
+        <button onClick={() => rerender()}>Force Rerender</button>
+      </div>
+      <div>
+        <button onClick={() => refreshData()}>Refresh Data</button>
+      </div>
+      <pre>{JSON.stringify(sorting, null, 2)}</pre>
+    </div>
+  )
 }
+
+export default TableView;

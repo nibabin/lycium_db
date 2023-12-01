@@ -1,31 +1,13 @@
-/* Define general table styles */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px; /* Adjust margin based on your layout */
-  }
-  
-  /* Style for table headers */
-  th {
-    background-color: #f2f2f2; /* Light gray background color */
+.tableCell, .tableHeader{
+    border: 1px solid black;
     padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd; /* Border color */
-  }
-  
-  /* Style for table rows */
-  td {
-    padding: 10px;
-    border: 1px solid #ddd; /* Border color */
-  }
-  
-  /* Alternating row background color for better readability */
-  tr:nth-child(even) {
-    background-color: #f9f9f9; /* Lighter gray background color */
-  }
-  
-  /* Hover effect on rows */
-  tr:hover {
-    background-color: #e5e5e5; /* Slightly darker gray on hover */
-  }
-  
+}
+
+.sortHeader{
+    cursor: pointer;
+    user-select: none;
+}
+
+.tableDiv{
+    margin-top: 10px;
+}

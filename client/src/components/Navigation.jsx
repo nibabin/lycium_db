@@ -1,5 +1,6 @@
 import React from 'react'
 import '../css/Navigation.css'
+import { Button } from '@chakra-ui/react'
 
 
 
@@ -11,14 +12,14 @@ const Navigation = () => {
                
             </div>
             <nav>
-                <ul>
-                    <li><a href='/' role='button'>Custom View</a></li>
-                    <li><a href='/table' role='button'>Table View</a></li>
-                    <li><a href='/map' role='button'>Map View</a></li>
+                <ul className="options">
+                    <li><a className="option" href='/' role='button'>Custom View</a></li>
+                    <li><a className="option" href='/table' role='button'>Table View</a></li>
+                    <li><a className="option" href='/map' role='button'>Map View</a></li>
                 </ul>
-
-            
             </nav>
+
+            <Button colorScheme='teal' className="button">Log Out</Button>
         </div>
         
     )

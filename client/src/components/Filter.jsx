@@ -1,22 +1,31 @@
 import React from 'react'
 import '../css/Filter.css'
+import { Button, Select, Input } from '@chakra-ui/react'
 
 export default function Filter(){
 
     return(
-        <form className='filter'>
-            <select>
-                <option value="genomic">Genomic</option>
-                <option value="genus">Genus</option>
-                <option selected value="species">Species</option>
-                <option value="material">Material in Hand</option>
-                <option value="country">Country</option>
-            </select>
-
-            <label>
-                Search for:
-            <input type='text' placeholder='ex: herb'/>
-            </label>
-        </form>
+        <div className='filter'>
+            <div className="filterSection">
+                <Select  
+                    bg='white'
+                    borderColor='teal'
+                    color='teal'
+                    placeholder='Filter by...'>
+                    <option className="filterOption" value='option1'>Option 1</option>
+                    <option className="filterOption" value='option2'>Option 2</option>
+                    <option className="filterOption" value='option3'>Option 3</option>
+                </Select>
+            </div>
+            <div className="filterSection">
+                <Input bg='white'
+                    borderColor='teal'
+                    color='teal'
+                    placeHolder="Filter query"></Input>
+            </div>
+            <div className="filterSection">
+                <Button colorScheme='teal'>Filter</Button>
+            </div>
+        </div>
     )
 }

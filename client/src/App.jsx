@@ -6,6 +6,8 @@ import Navigation from './components/Navigation'
 import Filter from './components/Filter'
 import TableView from './pages/TableView'
 import MapView from './pages/MapView'
+import { ChakraProvider } from '@chakra-ui/react'
+
 
 function App() {
   let element = useRoutes([
@@ -29,11 +31,14 @@ function App() {
 
   return (
     <div className='app'>
+      <ChakraProvider>
 
-      <Navigation />
-      <Filter/>
+        <Navigation />
+        <Filter/>
 
-      { element }
+        { element }
+
+      </ChakraProvider>
 
     </div>
   )
