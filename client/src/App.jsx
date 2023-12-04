@@ -7,6 +7,7 @@ import Filter from './components/Filter'
 import TableView from './pages/TableView'
 import MapView from './pages/MapView'
 import { ChakraProvider } from '@chakra-ui/react'
+import AddButton from './components/AddButton'
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
       <ChakraProvider>
 
         <Navigation />
+        <AddButton/>
         <Filter/>
 
         { element }

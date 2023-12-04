@@ -21,7 +21,7 @@ export default function Filter(){
                 <Input bg='white'
                     borderColor='teal'
                     color='teal'
-                    placeHolder="Filter query"></Input>
+                    placeholder="Filter query"></Input>
             </div>
             <div className="filterSection">
                 <Button colorScheme='teal'>Filter</Button>

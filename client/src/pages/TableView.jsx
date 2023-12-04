@@ -8,6 +8,11 @@ import {
   } from '@tanstack/react-table'
   import '../css/TableView.css'
 
+  import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
+import EditButton from '../components/EditButton';
+import DeleteButton from '../components/DeleteButton';
+
+
 function TableView() {
   const [specimen, setSpecimen] = useState([]);
 
@@ -27,14 +32,38 @@ function TableView() {
     fetchSpecimen();
   }, []);
 
+  const handleEdit = (param) =>{
+    console.log("EDIT")
+  }
+
+  const handleDelete = (param) =>{
+    console.log("DELETE")
+  }
+
   const columns = useMemo(
     () => [
+      {
+        header: 'Actions',
+        accessorKey: 'actions', 
+        cell: ({ row }) => {
+          return (
+            <div>
+              <EditButton row={row.original} />
+              <DeleteButton row={row.original}/>
+            </div>
+          );
+        },
+      },
       { accessorKey: 'genus', header: 'Genus' },
       { accessorKey: 'species', header: 'Species' },
       { accessorKey: 'field_pop_id', header: 'Field ID' },
       { accessorKey: 'greenhouse', header: 'Greenhouse' },
       { accessorKey: 'voucher_specimen', header: 'Voucher' },
-      { accessorKey: 'collection_date', header: 'Collection Date' },
+      { accessorKey: 'collection_date', header: 'Collection Date',
+        cell: ({ row }) => {
+          const collectionDate = new Date(row.original.collection_date);
+          return collectionDate.toLocaleString();
+        }, },
       { accessorKey: 'provenance', header: 'Provenance' },
       { accessorKey: 'country', header: 'Country' },
       { accessorKey: 'state_province', header: 'State' },
@@ -46,8 +75,6 @@ function TableView() {
       { accessorKey: 'nanodrop_concentration', header: 'Nanodrop Concentration' },
       { accessorKey: 'nanodrop_ratio', header: 'Nanodrop Ratio' },
       { accessorKey: 'published ', header: 'Published' },
-
-
     ],
     []
   );
@@ -116,14 +143,14 @@ function TableView() {
             })}
         </tbody>
       </table>
-      <div>{table.getRowModel().rows.length} Rows</div>
+      {/* <div>{table.getRowModel().rows.length} Rows</div>
       <div>
         <button onClick={() => rerender()}>Force Rerender</button>
       </div>
       <div>
         <button onClick={() => refreshData()}>Refresh Data</button>
       </div>
-      <pre>{JSON.stringify(sorting, null, 2)}</pre>
+      <pre>{JSON.stringify(sorting, null, 2)}</pre> */}
     </div>
   )
 }

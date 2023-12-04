@@ -1,6 +1,7 @@
 import React from 'react';
 import SpecimenAPI from '../../services/SpecimenAPI';
 import { useState, useEffect } from 'react';
+import { Button } from '@chakra-ui/react'
 import '../css/SpecimenList.css'
 
 
@@ -43,9 +44,9 @@ export default function SpecimenList(){
                     <p><strong>Collection Date:</strong> {new Date(s.collection_date).getDate()} {monthNames[new Date(s.collection_date).getMonth()]} {new Date(s.collection_date).getFullYear()}</p>
                     <p><strong>Collection Location:</strong> {s.state_provenance}, {s.country}</p>  
 
-                    <div className='buttons'>
-                        <button>Edit</button>
-                        <button>Delete</button>
+                    <div className='specimen-buttons'>
+                        <Button className="specimen-button" colorScheme='teal'>Edit</Button>
+                        <Button className="specimen-button" colorScheme='teal'>Delete</Button>
                     </div>  
                 </div>
 

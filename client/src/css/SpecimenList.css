@@ -1,3 +1,18 @@
+.specimen-container {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
 
-  
-  
+.specimen-item {
+background-color: aliceblue;
+flex: 0 0 calc(33.33% - 10px); 
+margin: 2px;
+padding: 5px;
+border-radius: 5px;
+}
+
+.specimen-button{
+    margin: 20px 5px;
+}

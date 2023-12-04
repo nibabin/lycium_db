@@ -6,8 +6,8 @@ import { useState, useEffect } from 'react';
 const apiKey = import.meta.env.REACT_APP_GOOGLE_API_KEY
 
 const containerStyle = {
-  width: '400px',
-  height: '400px'
+  width: '100vw',
+  height: '100vh'
 };
 
 const center = {
