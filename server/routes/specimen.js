@@ -5,8 +5,8 @@ const router = express.Router()
 
 router.get('/', SpecimenController.getSpecimen);
 router.get('/:specimen_id', SpecimenController.getSpecimenInfoById);
-
-
-
+router.delete('/:specimen_id', SpecimenController.deleteSpecimen);
+router.post('/', SpecimenController.addSpecimen);
+router.put('/:specimen_id', SpecimenController.updateSpecimen);
 
 export default router;
