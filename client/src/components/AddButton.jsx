@@ -41,7 +41,7 @@ export default function AddButton() {
 
   const handleFormSubmit = async (formData) =>{
     for (const key in formData) {
-      if (formData.hasOwnProperty(key)) { // Ensure it's a direct property and not inherited
+      if (formData.hasOwnProperty(key)) { 
         const value = formData[key];
         if (value == ''){
           if (key == 'collection_date' || key == 'latitude' || key == 'longitude' || key == 'nanodrop_concentration' || key == 'nanodrop_ratio' || key == 'published'){
@@ -66,9 +66,9 @@ export default function AddButton() {
 
 
   return (
-    <div className='add-button'>
+    <>
       <Button colorScheme='teal' onClick={handleOpen}>Add Specimen</Button>
       <AddEditModal isEditing={false} isOpen={isOpen} onClose={handleClose} onSubmit={handleFormSubmit} initialValues={formData} />
-    </div>
+    </>
   );
 }

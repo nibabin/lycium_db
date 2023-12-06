@@ -1,4 +1,27 @@
-.filter-option{
+.filter-option {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between; 
+}
+
+.filter-option > * {
+    flex: 1; 
+    margin-right: 10px; 
+}
+
+.filter-option > *:last-child {
+    margin-right: 0;
+}
+
+.radio-group label{
+    margin: 0px 5px 0px 5px;
+}
+
+.radio-group{
+    display: flex;
+    justify-content: center;
+}
+
+.radio-option{
+    display: flex;
+    justify-content: center;
 }
