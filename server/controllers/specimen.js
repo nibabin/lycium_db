@@ -1,18 +1,5 @@
 import { pool } from '../config/database.js'
 
-function generateRandomString(length) {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      result += characters.charAt(randomIndex);
-    }
-  
-    return result;
-  }
-  
-
 
 const getSpecimen = async(req, res) =>{
     try{
@@ -51,19 +38,18 @@ const getSpecimenInfoById = async(req, res) =>{
 
 const addSpecimen = async(req, res) =>{
     try{
-        const specimen_id = generateRandomString(25);
         const {location_id, genetics_id, material, 
         notes, collection_date, 
     voucher_specimen, greenhouse, field_pop_id, published, nanodrop_concentration, 
     nanodrop_ratio} = req.body
         const result = await pool.query(`
-            INSERT INTO specimen (specimen_id, location_id, genetics_id, material, 
+            INSERT INTO specimen (location_id, genetics_id, material, 
                 notes, collection_date, 
             voucher_specimen, greenhouse, field_pop_id, published, nanodrop_concentration, 
         nanodrop_ratio)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
         RETURNING *
-        `, [specimen_id, location_id, genetics_id, material, 
+        `, [location_id, genetics_id, material, 
             notes, collection_date, 
         voucher_specimen, greenhouse, field_pop_id, published, nanodrop_concentration, 
     nanodrop_ratio])

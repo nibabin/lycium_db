@@ -33,7 +33,7 @@ function TableView() {
   }, []);
 
   const handleEdit = (param) =>{
-    console.log("VIEW")
+    console.log("EDIT")
   }
 
   const handleDelete = (param) =>{
