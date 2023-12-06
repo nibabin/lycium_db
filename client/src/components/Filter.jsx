@@ -1,6 +1,7 @@
 import React from 'react'
 import '../css/Filter.css'
 import { Button, Select, Input } from '@chakra-ui/react'
+import AddButton from './AddButton'
 
 export default function Filter(){
 
@@ -25,6 +26,7 @@ export default function Filter(){
             </div>
             <div className="filterSection">
                 <Button colorScheme='teal'>Filter</Button>
+                <AddButton/>
             </div>
         </div>
     )

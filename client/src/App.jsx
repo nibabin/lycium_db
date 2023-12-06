@@ -35,7 +35,6 @@ function App() {
       <ChakraProvider>
 
         <Navigation />
-        <AddButton/>
         <Filter/>
 
         { element }

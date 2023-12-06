@@ -40,7 +40,6 @@ const getSpecimenInfoById = async(req, res) =>{
         LEFT JOIN Genomics ON Specimen.specimen_id = Genomics.specimen_id
         WHERE Specimen.specimen_id = $1
         GROUP BY Specimen.specimen_id;
-        
                     `
 
         const result = await pool.query(query, [specimen_id])
@@ -56,6 +55,8 @@ const addSpecimen = async(req, res) =>{
     try{
 
         const formData = req.body
+
+        console.log(formData)
 
         //check if this genetics already exist and if no - create a new one
         const geneticsQuery = 'SELECT genetics_id FROM Genetics WHERE genus = $1 AND species = $2';
@@ -122,8 +123,6 @@ const addSpecimen = async(req, res) =>{
         // the string is represented in this way: (extraction_number:extraction_date, extraction_number:extraction_date format)
         const genomicsData = parseGenomicsString(formData.genomics_string); 
 
-        console.log(genomicsData)
-
         if(genomicsData){
             for (const genomicsEntry of genomicsData) {
                 const genomicsQuery = `
@@ -142,10 +141,11 @@ const addSpecimen = async(req, res) =>{
 
         }
         
-        res.status(200).json()
+        return res.status(200).json({ success: true, specimenId})
         return { success: true, specimenId };
 
     }catch(error){
+        console.log(error)
         res.status(409).json({error: error.message})
         return { success: false, error: error.message };
 

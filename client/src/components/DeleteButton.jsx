@@ -26,7 +26,7 @@ export default function DeleteButton({row}) {
 
   return (
     <div className='delete-button'>
-      <Button onClick={() => handleDelete(row)}><DeleteIcon/></Button>
+      <Button colorScheme='teal' onClick={() => handleDelete(row)}><DeleteIcon/></Button>
     </div>
   );
 }

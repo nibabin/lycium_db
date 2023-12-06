@@ -1,7 +1,7 @@
 .filter{
     display: flex;
     flex-direction: column;
-    background-color: black;
+    background-color: #f1f5f9;
     padding: 30px;
     width: 50%;
     margin: 0px auto 10px auto;
@@ -11,6 +11,12 @@
 
 .filterSection{
     margin: 10px 0px;
+    display: flex;
+    justify-content: center;
+}
+
+.filterSection button{
+    margin: 0px 5px 0px 5px;
 }
 .filterOption{
     color: black;

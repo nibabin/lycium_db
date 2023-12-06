@@ -28,11 +28,18 @@ export default function AddEditModal({
 }) {
   const [formData, setFormData] = useState(initialValues);
 
+  // NEEDS
   useEffect(() => {
-    if (!isEditing) {
+    if (isEditing) {
+      const keys = Object.keys(initialValues);
+      for (const key of keys) {
+        if (initialValues[key] === null || initialValues[key] === undefined) {
+          initialValues[key] = '';
+        }
+      }    
       setFormData(initialValues);
     }
-  }, [isEditing, initialValues]);
+  }, [isEditing, initialValues, isOpen]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -176,6 +183,14 @@ export default function AddEditModal({
               <Input
                 type="number"
                 name="material"
+                value={formData.nanodrop_ratio}
+                onChange={handleChange}
+              />
+              <FormLabel>Extraction Data</FormLabel>
+              <Input
+                type="text"
+                name="extraction_data"
+                placeholder='extraction_number:extraction_date, extraction_number:extraction_date, ...'
                 value={formData.nanodrop_ratio}
                 onChange={handleChange}
               />

@@ -1,6 +1,7 @@
 .tableCell, .tableHeader{
-    border: 1px solid black;
+    border: 1px solid gray;
     padding: 10px;
+    min-width: 7vw;
 }
 
 .sortHeader{
@@ -8,6 +9,20 @@
     user-select: none;
 }
 
-.tableDiv{
+.table-wrapper{
     margin-top: 10px;
+}
+
+.tableDiv{
+    margin: 10px 5px 10px 5px;
+    overflow-x: scroll;
+    background-color: #f1f5f9;
+}
+
+.table-buttons{
+    display: flex;
+}
+
+.table-buttons button{
+    margin: 0px 2px 0px 2px;
 }

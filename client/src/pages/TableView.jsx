@@ -7,6 +7,7 @@ import {
     useReactTable,
   } from '@tanstack/react-table'
   import '../css/TableView.css'
+  import { Spinner } from '@chakra-ui/react'
 
   import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
 import EditButton from '../components/EditButton';
@@ -47,8 +48,8 @@ function TableView() {
         accessorKey: 'actions', 
         cell: ({ row }) => {
           return (
-            <div>
-              <EditButton row={row.original} />
+            <div className="table-buttons">
+              <EditButton  row={row.original} />
               <DeleteButton row={row.original}/>
             </div>
           );
@@ -62,7 +63,7 @@ function TableView() {
       { accessorKey: 'collection_date', header: 'Collection Date',
         cell: ({ row }) => {
           const collectionDate = new Date(row.original.collection_date);
-          return collectionDate.toLocaleString();
+          return collectionDate.toLocaleDateString();
         }, },
       { accessorKey: 'provenance', header: 'Provenance' },
       { accessorKey: 'country', header: 'Country' },
@@ -87,8 +88,9 @@ function TableView() {
   });
 
   return (
+    <div className="table-wrapper">
+      {specimen.length === 0 ? <Spinner className="spinner" size="xl" /> :
     <div className="tableDiv">
-      <div />
       <table>
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
@@ -143,6 +145,7 @@ function TableView() {
             })}
         </tbody>
       </table>
+      
       {/* <div>{table.getRowModel().rows.length} Rows</div>
       <div>
         <button onClick={() => rerender()}>Force Rerender</button>
@@ -151,6 +154,7 @@ function TableView() {
         <button onClick={() => refreshData()}>Refresh Data</button>
       </div>
       <pre>{JSON.stringify(sorting, null, 2)}</pre> */}
+    </div>}
     </div>
   )
 }

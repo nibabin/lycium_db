@@ -5,6 +5,7 @@ import {
 } from '@chakra-ui/react';
 import AddEditModal from './AddEditModal';
 import { EditIcon } from '@chakra-ui/icons';
+import SpecimenAPI from '../../services/SpecimenAPI';
 
 export default function EditButton({row}) {
 
@@ -39,9 +40,21 @@ export default function EditButton({row}) {
     setIsOpen(false);
   };
 
-  const handleFormSubmit = (formData) =>{
+  const handleFormSubmit = async (formData) =>{
+    for (const key in formData) {
+      if (formData.hasOwnProperty(key)) { // Ensure it's a direct property and not inherited
+        const value = formData[key];
+        if (value == ''){
+          if (key == 'collection_date' || key == 'latitude' || key == 'longitude' || key == 'nanodrop_concentration' || key == 'nanodrop_ratio' || key == 'published'){
+            formData[key] = undefined
+          }
+        }
+      }
+    }
     console.log("EDIT")
     console.log(formData)
+    const x = await SpecimenAPI.createSpecimen(formData)
+    console.log(x)
     handleClose()
     toast({
         title: 'Edit Successful', 
@@ -55,7 +68,7 @@ export default function EditButton({row}) {
 
   return (
     <div className='edit-button'>
-      <Button onClick={handleOpen}><EditIcon/></Button>
+      <Button colorScheme='teal' onClick={handleOpen}><EditIcon/></Button>
       <AddEditModal isEditing={true} isOpen={isOpen} onClose={handleClose} onSubmit={handleFormSubmit} initialValues={formData} />
     </div>
   );
