@@ -12,8 +12,8 @@ export default function DeleteButton({row}) {
   
   const toast = useToast()
   const handleDelete = async (row) =>{
-      await SpecimenAPI.deleteSpecimen(row.specimen_id)
       console.log(row.specimen_id)
+      await SpecimenAPI.deleteSpecimen(row.specimen_id)
       toast({
           title: 'Delete Successful', 
           description: 'Successfully deleted specimen', 

@@ -6,7 +6,7 @@ const getSpecimen = async(req, res) =>{
         const query = `SELECT *
                         FROM specimen s
                         JOIN genetics g ON s.genetics_id = g.genetics_id
-                        JOIN location l ON s.location_id = l.location_id
+                        JOIN location l ON s.specimen_id = l.specimen_id
                     `
 
         const result = await pool.query(query);
@@ -22,7 +22,7 @@ const getSpecimenInfoById = async(req, res) =>{
         const query = `SELECT *
                         FROM specimen s
                         JOIN genetics g ON s.genetics_id = g.genetics_id
-                        JOIN location l ON s.location_id = l.location_id
+                        JOIN location l ON s.specimen_id = l.specimen_id
                         WHERE s.specimen_id = $1
         
                     `
@@ -70,9 +70,9 @@ const deleteSpecimen = async(req, res) =>{
         const query = `DELETE FROM specimen
                         WHERE specimen_id = $1
                     `
-        const result = await pool.query(query, [specimen_id])
-        res.status(200).json(result.rows[0])
-        
+        await pool.query(query, [specimen_id])
+        res.status(200).json({})
+
     }catch(error){
         res.status(409).json({error: error.message})
     }
