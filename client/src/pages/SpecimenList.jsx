@@ -45,7 +45,7 @@ export default function SpecimenList(){
                     <p><strong>Collection Location:</strong> {s.state_provenance}, {s.country}</p>  
 
                     <div className='specimen-buttons'>
-                        <Button className="specimen-button" colorScheme='teal'>Edit</Button>
+                        <Button className="specimen-button" colorScheme='teal'>View</Button>
                         <Button className="specimen-button" colorScheme='teal'>Delete</Button>
                     </div>  
                 </div>
