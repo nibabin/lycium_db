@@ -51,7 +51,7 @@ export default function AddEditModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent minW="50vw" maxW="fit-content">
         <ModalHeader>{isEditing ? 'Edit Specimen' : 'Add Specimen'}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
@@ -81,7 +81,7 @@ export default function AddEditModal({
               <FormLabel>Greenhouse</FormLabel>
               <Input
                 type="text"
-                name="greemhouse"
+                name="greenhouse"
                 value={formData.greenhouse}
                 onChange={handleChange}
               />
