@@ -12,18 +12,87 @@ function parseGenomicsString(genomicsString) {
     });
   
     return genomicsData;
-  }
+}
+
+
+
+const getFilteredSpecimen = async(req, res) =>{
+    try{
+        const filterParameters = req.body.filterParameters;
+        let query = `SELECT * FROM SpecimenData \n`
+
+        let addAnd = false
+        let val = 1
+
+        // console.log(filterParameters)
+
+        for (const filter of filterParameters){
+
+            // console.log(filter)
+            let operator = filter.operator;
+            let value = filter.value
+
+            switch (filter.operator) {
+                case 'equal':
+                  operator = '=';
+                  value = filter.value;
+                  break;
+                case 'greater':
+                  operator = '>';
+                  value = filter.value;
+                  break;
+                case 'smaller':
+                  operator = '<';
+                  value = filter.value;
+                  break;
+                case 'contains':
+                  operator = 'LIKE';
+                  value = `%${filter.value}%`; // For partial matches with LIKE operator
+                  break;
+                
+            }
+
+            if(addAnd){
+                //if it's a string
+                if(isNaN(value)){
+                    query += ` AND ${filter.parameter} ${operator} '${value}'`
+                }else{
+                    query += ` AND ${filter.parameter} ${operator} ${value}`
+                }
+                
+            }else{
+                //if it's a string
+                if(isNaN(value)){
+                    query += `WHERE ${filter.parameter} ${operator} '${value}'`;
+
+                }else{
+                    query += `WHERE ${filter.parameter} ${operator} ${value}`;
+                }
+                
+            }
+            
+
+            // console.log(query)
+            addAnd = true
+            val +=1
+        }
+
+        console.log(query);
+
+        const result = await pool.query(query);
+        res.status(200).json(result.rows);
+
+    }catch(error){
+        res.status(400).json( { error: error.message } )
+    }
+}
   
 
 
 const getSpecimen = async(req, res) =>{
     try{
-        const query = `
-        SELECT Specimen.*, json_agg(Genomics.*) AS genomics_array
-        FROM Specimen
-        LEFT JOIN Genomics ON Specimen.specimen_id = Genomics.specimen_id
-        GROUP BY Specimen.specimen_id;
-        `
+
+        const query = `SELECT * FROM SpecimenData;`
 
         const result = await pool.query(query);
         res.status(200).json(result.rows);
@@ -35,11 +104,8 @@ const getSpecimen = async(req, res) =>{
 const getSpecimenInfoById = async(req, res) =>{
     try{
         const specimen_id = req.params.specimen_id
-        const query = `SELECT Specimen.*, json_agg(Genomics.*) AS genomics_array
-        FROM Specimen
-        LEFT JOIN Genomics ON Specimen.specimen_id = Genomics.specimen_id
-        WHERE Specimen.specimen_id = $1
-        GROUP BY Specimen.specimen_id;
+        const query = `SELECT * FROM SpecimenData
+                    WHERE specimen_id = $1;
                     `
 
         const result = await pool.query(query, [specimen_id])
@@ -55,8 +121,6 @@ const addSpecimen = async(req, res) =>{
     try{
 
         const formData = req.body
-
-        console.log(formData)
 
         //check if this genetics already exist and if no - create a new one
         const geneticsQuery = 'SELECT genetics_id FROM Genetics WHERE genus = $1 AND species = $2';
@@ -123,6 +187,8 @@ const addSpecimen = async(req, res) =>{
         // the string is represented in this way: (extraction_number:extraction_date, extraction_number:extraction_date format)
         const genomicsData = parseGenomicsString(formData.genomics_string); 
 
+        console.log(genomicsData)
+
         if(genomicsData){
             for (const genomicsEntry of genomicsData) {
                 const genomicsQuery = `
@@ -141,11 +207,10 @@ const addSpecimen = async(req, res) =>{
 
         }
         
-        return res.status(200).json({ success: true, specimenId})
+        res.status(200).json()
         return { success: true, specimenId };
 
     }catch(error){
-        console.log(error)
         res.status(409).json({error: error.message})
         return { success: false, error: error.message };
 
@@ -275,5 +340,6 @@ export default{
     getSpecimenInfoById, 
     deleteSpecimen, 
     addSpecimen, 
-    updateSpecimen
+    updateSpecimen, 
+    getFilteredSpecimen
 }

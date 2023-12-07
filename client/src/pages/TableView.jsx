@@ -12,6 +12,7 @@ import {
   import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
 import EditButton from '../components/EditButton';
 import DeleteButton from '../components/DeleteButton';
+import ExportExcelButton from '../components/ExportExcelButton';
 
 
 function TableView() {
@@ -89,6 +90,8 @@ function TableView() {
 
   return (
     <div className="table-wrapper">
+          <ExportExcelButton data={specimen} />
+
       {specimen.length === 0 ? <Spinner className="spinner" size="xl" /> :
     <div className="tableDiv">
       <table>

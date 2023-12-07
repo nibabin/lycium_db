@@ -20,6 +20,19 @@ const getGeneticsByParams = async(req, res) =>{
     }
 }
 
+const getGenetics = async(req, res) =>{
+    try{
+
+        const query = `
+        SELECT genetics_id, species, genus
+        FROM genetics;`
+        const result = await pool.query(query);
+        res.status(200).json(result.rows);
+    }catch(error){
+        res.status(409).json({error: error.message})
+    }
+}
+
 const addGenetics = async(req, res) =>{
     try{
 
@@ -44,5 +57,6 @@ const addGenetics = async(req, res) =>{
 
 export default {
     getGeneticsByParams, 
-    addGenetics
+    addGenetics,
+    getGenetics
 };

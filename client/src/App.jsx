@@ -8,14 +8,14 @@ import TableView from './pages/TableView'
 import MapView from './pages/MapView'
 import { ChakraProvider } from '@chakra-ui/react'
 import AddButton from './components/AddButton'
+import SpeciesList from './pages/SpeciesList'
 
 
 function App() {
   let element = useRoutes([
     {
       path:'/',
-      element: <SpecimenList/>
-
+      element: <SpeciesList/>
     },
     {
       path:'/table',
@@ -25,7 +25,12 @@ function App() {
     {
       path:'/map',
       element:<MapView/>
-    }
+    },
+    {
+      path:'/species/:id',
+      element: <SpecimenList/>
+    },
+    
 
   ])
   

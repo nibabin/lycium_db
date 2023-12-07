@@ -3,9 +3,12 @@ import SpecimenAPI from '../../services/SpecimenAPI';
 import { useState, useEffect } from 'react';
 import { Button } from '@chakra-ui/react'
 import '../css/SpecimenList.css'
+import { useParams } from 'react-router-dom';
 
 
 export default function SpecimenList(){
+    const { id } = useParams();
+    console.log(id)
     const [specimen, setSpecimen] = useState([]);
 
     useEffect(()=>{
