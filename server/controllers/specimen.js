@@ -18,7 +18,8 @@ function parseGenomicsString(genomicsString) {
 
 const getFilteredSpecimen = async(req, res) =>{
     try{
-        const filterParameters = req.body.filterParameters;
+        console.log(req.body)
+        const filterParameters = req.body;
         let query = `SELECT * FROM SpecimenData \n`
 
         let addAnd = false
@@ -80,9 +81,11 @@ const getFilteredSpecimen = async(req, res) =>{
         console.log(query);
 
         const result = await pool.query(query);
+        console.log(result)
         res.status(200).json(result.rows);
 
     }catch(error){
+        console.log(error)
         res.status(400).json( { error: error.message } )
     }
 }

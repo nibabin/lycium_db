@@ -3,6 +3,8 @@ import '../css/Filter.css'
 import { Button, Select, Input } from '@chakra-ui/react'
 import AddButton from './AddButton'
 import FilterOption from './FilterOption'
+import SpecimenAPI from '../../services/SpecimenAPI';
+
 export default function Filter(){
 
     const defaultCurFilter = {
@@ -171,6 +173,8 @@ export default function Filter(){
     const submitFilters = async() =>{
         const jsonArray = JSON.stringify(currentFilters);
         console.log(jsonArray)
+        const x = await SpecimenAPI.getFilteredSpecimen(currentFilters)
+        console.log(x)
     }
 
     const addDefaultFilter = () =>{
