@@ -8,14 +8,16 @@ import SpecimenAPI from '../../services/SpecimenAPI';
 export default function Filter(){
 
     const defaultCurFilter = {
-        "parameter": '',
+        'type': 'filter',
+        "parameter": 'genus',
         'operator': '',
         'value': '',
     }
     
     const [currentFilters, setCurrentFilters] = useState([
         {
-            "parameter": '',
+            'type': 'filter',
+            "parameter": 'genus',
             'operator': '',
             'value': '',
         }
@@ -36,136 +38,203 @@ export default function Filter(){
         {
             name: 'Genus',
             value: 'genus',
-            radioOptions: [
+            filterRadioOptions: [
                 'equal',
                 'contains',
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
             ]
         },
         {
             name: 'Specimen',
             value: 'specimen',
-            radioOptions: [
+            filterRadioOptions: [
                 'equal',
                 'contains'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
             ]
         },
         {
             name: 'Field ID',
             value: 'field_id',
-            radioOptions: [
+            filterRadioOptions: [
                 'equal',
                 'contains'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
             ]
         },
         {
             name: 'Greenhouse',
             value: 'greenhouse',
-            radioOptions: [
+            filterRadioOptions: [
                 'equal',
                 'contains'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
             ]
         },
         {
             name: 'Voucher',
             value: 'voucher',
-            radioOptions: [
+            filterRadioOptions: [
                 'equal',
                 'contains'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
             ]
         },
         {
             name: 'Collection Date',
             value: 'collection_date',
-            radioOptions: [
+            filterRadioOptions: [
                 'equal',
                 'contains',
                 'greater',
                 'less'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
             ]
         },
         {
             name: 'Provenance',
             value: 'provenance',
-            radioOptions: [
+            filterRadioOptions: [
                 'equal',
                 'contains'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
             ]
         },
         {
             name: 'Country',
             value: 'country',
-            radioOptions: [
+            filterRadioOptions: [
                 'equal',
                 'contains'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
             ]
         },
         {
             name: 'State',
             value: 'state',
-            radioOptions: [
+            filterRadioOptions: [
                 'equal',
                 'contains'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
             ]
         },
         {
             name: 'Specific Local',
             value: 'specific_local',
-            radioOptions: [
+            filterRadioOptions: [
                 'equal',
                 'contains'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
             ]
         },
         {
             name: 'Latitude',
             value: 'latitude',
-            radioOptions: [
+            filterRadioOptions: [
                 'equal',
-                'contains'
+                'contains',
+                'less',
+                'greater'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
             ]
         },
         {
             name: 'Longitude',
             value: 'longitude',
-            radioOptions: [
+            filterRadioOptions: [
                 'equal',
                 'contains',
                 'less', 
                 'greater'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
             ]
         },
         {
             name: 'Notes',
             value: 'notes',
-            radioOptions: [
+            filterRadioOptions: [
                 'equal',
                 'contains'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
             ]
         },
         {
             name: 'Nanodrop Concentration',
             value: 'nanodrop_concentration',
-            radioOptions: [
+            filterRadioOptions: [
                 'equal',
                 'contains',
                 'greater',
                 'less'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
             ]
         },
         {
             name: 'Nanodrop Ratio',
             value: 'nanodrop_ratio',
-            radioOptions: [
+            filterRadioOptions: [
                 'equal',
                 'contains',
                 'greater',
                 'less'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
             ]
         },
         {
             name: 'Published',
             value: 'published',
-            radioOptions: [
+            filterRadioOptions: [
                 'equal',
+                'contains'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
             ]
         },
     ]
@@ -192,8 +261,8 @@ export default function Filter(){
     }
 
     const onFilterOptionClear = () =>{
-        setCurrentFilters([defaultCurFilter])
-        setExistingFilters([possibleFilters[0]])
+        setCurrentFilters([])
+        setExistingFilters([])
     }
     return(
         <div className='filter'>

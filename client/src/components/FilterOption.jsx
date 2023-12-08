@@ -5,8 +5,21 @@ import AddButton from './AddButton'
 import { Radio, RadioGroup } from '@chakra-ui/react'
 import '../css/FilterOption.css'
 export default function FilterOption({ onChange, possibleFilters, index }){
+
+    const typeOptions = [
+        {
+            "name": "Filter",
+            "value": "filter",
+        },
+        {
+            "name": "Sort",
+            "value": "sort",
+        }
+    ]
+
+    const [typeSelection, setTypeSelection] = useState(typeOptions[0])
     const [selectionOption, setSelectionOption] = useState(possibleFilters[0])
-    const [selectedRadio, setSelectedRadio] = useState(possibleFilters[0].radioOptions[0])
+    const [selectedRadio, setSelectedRadio] = useState(possibleFilters[0].filterRadioOptions[0])
     const [filterText, setFilterText] = useState('')
 
     const handleSelectionChange = (e) => {
@@ -27,8 +40,32 @@ export default function FilterOption({ onChange, possibleFilters, index }){
             onChange('value', e.target.value, index)
         }
 
+    const handleTypeSelectionChange = (e) =>{
+        const selectedValue = e.target.value;
+        const selectedOption = typeOptions.find((option) => option.value === selectedValue);
+        setTypeSelection(selectedOption);
+        setFilterText('')
+        onChange('type', e.target.value, index)
+        onChange('parameter', '', index)
+    }
+
     return(
         <div className='filter-option'>
+            <div>
+                <label>
+                    Type
+                </label>
+                <Select
+                    bg='white'
+                    borderColor='teal'
+                    color='teal'
+                    onChange={handleTypeSelectionChange}
+                    value = {typeSelection.value}>
+                    {typeOptions.map((option) => (
+                        <option key={option.value} className="filterOption" value={option.value}>{option.name}</option>
+                    ))}
+                </Select>
+            </div>
             <div>
                 <label>
                     Select Option
@@ -54,17 +91,26 @@ export default function FilterOption({ onChange, possibleFilters, index }){
                     color='teal'
                     placeholder="Herb..."
                     onChange={(e) => handleInputTextChange(e)}
-                    value={filterText}/>
+                    value={filterText}
+                    disabled={typeSelection.value == "sort"}
+                    />
             </div>
             <div>
                 <label>
                     Radio Options
                 </label>
                 <RadioGroup className="radio-group">
-                    {selectionOption.radioOptions.map((option, idx) => (
+                    {typeSelection.value == "filter" ?
+                    selectionOption.filterRadioOptions.map((option, idx) => (
                         <div key={idx} className="radio-option">
                             <Radio onChange={handleRadioChange} value={option}>{option}</Radio>
-                            {idx === selectionOption.radioOptions.length - 1 ? null : <span > | </span>}
+                            {idx === selectionOption.filterRadioOptions.length - 1 ? null : <span > | </span>}
+                        </div>
+                    ))
+                    : selectionOption.sortRadioOptions.map((option, idx) => (
+                        <div key={idx} className="radio-option">
+                            <Radio onChange={handleRadioChange} value={option}>{option}</Radio>
+                            {idx === selectionOption.sortRadioOptions.length - 1 ? null : <span > | </span>}
                         </div>
                     ))}
                 </RadioGroup>

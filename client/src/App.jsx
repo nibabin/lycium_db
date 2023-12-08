@@ -9,7 +9,7 @@ import MapView from './pages/MapView'
 import { ChakraProvider } from '@chakra-ui/react'
 import AddButton from './components/AddButton'
 import SpeciesList from './pages/SpeciesList'
-
+import { DataProvider } from './context/DataProvider'
 
 function App() {
   let element = useRoutes([
@@ -38,11 +38,12 @@ function App() {
   return (
     <div className='app'>
       <ChakraProvider>
+        <DataProvider>
+          <Navigation />
+          <Filter/>
 
-        <Navigation />
-        <Filter/>
-
-        { element }
+          { element }
+        </DataProvider>
 
       </ChakraProvider>
 

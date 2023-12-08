@@ -1,87 +1,128 @@
 import { pool } from '../config/database.js'
 
-function parseGenomicsString(genomicsString) {
-    if(!genomicsString){
-        return []
-    }
-    const genomicsArray = genomicsString.split(', '); // Split by comma and space
-  
-    const genomicsData = genomicsArray.map((entry) => {
-      const [extraction_number, extraction_date] = entry.split(':'); // Split each entry by colon
-      return { extraction_number: extraction_number, extraction_date };
-    });
-  
-    return genomicsData;
+
+
+/**
+ * 
+ * {
+    "filterParameters":[
+        {
+            "type":"sorting", 
+            "value":"", 
+            "parameter":"genus", 
+            "operator":"ASC"
+        }, 
+        {
+            "type":"filtering", 
+            "parameter":"country", 
+            "operator":"=",
+            "value":"South Africa"
+        }, 
+        {
+            "type":"filtering", 
+            "parameter":"genus", 
+            "operator":"contains",
+            "value":"l"
+        }
+    ]
 }
-
-
-
+ * 
+ */
 const getFilteredSpecimen = async(req, res) =>{
     try{
-        console.log(req.body)
-        const filterParameters = req.body;
+        console.log("starting")
+        const params = req.body.filterParameters;
+
+        //define the initial query
         let query = `SELECT * FROM SpecimenData \n`
 
+        let filterQuery = ``
+        let sortingQuery = `ORDER BY`
+
+        //variables to compose the query
         let addAnd = false
-        let val = 1
+        let val = 0
+        let addComma = false
 
-        // console.log(filterParameters)
+        //iterate through every parameter and change initial query due to them 
+        for (const param of params){
+            //apply sorting logic
+            const type = param.type
+            if(type == 'sorting'){
+                const operator = param.operator;
+                const parameter = param.parameter
 
-        for (const filter of filterParameters){
+                if(addComma){
+                    sortingQuery += `, ${parameter} ${operator}`
 
-            // console.log(filter)
-            let operator = filter.operator;
-            let value = filter.value
-
-            switch (filter.operator) {
-                case 'equal':
-                  operator = '=';
-                  value = filter.value;
-                  break;
-                case 'greater':
-                  operator = '>';
-                  value = filter.value;
-                  break;
-                case 'smaller':
-                  operator = '<';
-                  value = filter.value;
-                  break;
-                case 'contains':
-                  operator = 'LIKE';
-                  value = `%${filter.value}%`; // For partial matches with LIKE operator
-                  break;
-                
-            }
-
-            if(addAnd){
-                //if it's a string
-                if(isNaN(value)){
-                    query += ` AND ${filter.parameter} ${operator} '${value}'`
                 }else{
-                    query += ` AND ${filter.parameter} ${operator} ${value}`
+                    sortingQuery += ` ${parameter} ${operator}`
+                    addComma = true
                 }
-                
+
             }else{
-                //if it's a string
-                if(isNaN(value)){
-                    query += `WHERE ${filter.parameter} ${operator} '${value}'`;
+                //apply filtering logic
+                let operator = param.operator;
+                let value = param.value
 
-                }else{
-                    query += `WHERE ${filter.parameter} ${operator} ${value}`;
+                switch (param.operator) {
+                    case 'equal':
+                        operator = '=';
+                        value = param.value;
+                        break;
+                    case 'greater':
+                        operator = '>';
+                        value = param.value;
+                        break;
+                    case 'smaller':
+                        operator = '<';
+                        value = param.value;
+                        break;
+                    case 'contains':
+                        operator = 'LIKE';
+                        value = `%${param.value}%`; // For partial matches with LIKE operator
+                        break;
+                    
                 }
-                
-            }
-            
 
-            // console.log(query)
-            addAnd = true
-            val +=1
+                if(addAnd){
+                    //if it's a string
+                    if(isNaN(value)){
+                        filterQuery += ` AND ${param.parameter} ${operator} '${value}'`
+                    }else{
+                        filterQuery += ` AND ${param.parameter} ${operator} ${value}`
+                    }
+                    
+                }else{
+                    //if it's a string
+                    if(isNaN(value)){
+                        filterQuery += `WHERE ${param.parameter} ${operator} '${value}'`;
+
+                    }else{
+                        filterQuery += `WHERE ${param.parameter} ${operator} ${value}`;
+                    }
+                    
+                }
+            
+                addAnd = true
+                val +=1
+            }            
         }
+
+        //append both queries to the initial query
+        if(filterQuery){
+            query += filterQuery
+            query += '\n'
+        }
+        
+        if(sortingQuery != `ORDER BY`){
+            query += sortingQuery
+        }
+        
 
         console.log(query);
 
         const result = await pool.query(query);
-        console.log(result)
         res.status(200).json(result.rows);
 
     }catch(error){
@@ -187,28 +228,23 @@ const addSpecimen = async(req, res) =>{
         console.log('location_id', locationResult.rows[0].location_id)
 
         // handle the string with genomics data
-        // the string is represented in this way: (extraction_number:extraction_date, extraction_number:extraction_date format)
-        const genomicsData = parseGenomicsString(formData.genomics_string); 
+        const extraction_number = formData.extraction_number
+        const extraction_date = formData.extraction_date
 
-        console.log(genomicsData)
-
-        if(genomicsData){
-            for (const genomicsEntry of genomicsData) {
-                const genomicsQuery = `
+        const genomicsQuery = `
                 INSERT INTO Genomics (extraction_number, extraction_date, specimen_id)
                 VALUES ($1, $2, $3)
-                RETURNING genomic_id`;
+                RETURNING genomic_id
+                `;
           
-                const genomicRes = await pool.query(genomicsQuery, [
-                  genomicsEntry.extraction_number,
-                  genomicsEntry.extraction_date,
-                  specimenId,
-                ]);
+        const genomicRes = await pool.query(genomicsQuery, [
+            extraction_number, 
+            extraction_date,
+            specimenId,
+        ]);
 
-                console.log('genomic_id', genomicRes.rows[0].genomic_id)
-            }
+        console.log('genomic_id', genomicRes.rows[0].genomic_id)
 
-        }
         
         res.status(200).json()
         return { success: true, specimenId };
@@ -240,7 +276,6 @@ const updateSpecimen = async(req, res) =>{
     try{
 
         const specimen_id = req.params.specimen_id
-
         const formData = req.body
 
         //check if this genetics already exist and if no - create a new one
@@ -259,77 +294,58 @@ const updateSpecimen = async(req, res) =>{
             geneticsId = newGeneticsResult.rows[0].genetics_id;
         }
 
-        console.log('gentics id', geneticsId)
-
-        //update a specimen with this genetics data
-        const specimenQuery = `
-        UPDATE Specimen 
-      SET genetics_id = $1, material = $2, notes = $3, collection_date = $4, voucher_specimen = $5,
-          greenhouse = $6, field_pop_id = $7, published = $8, nanodrop_concentration = $9, nanodrop_ratio = $10
-      WHERE specimen_id = $11
-        `;
-
-        await pool.query(specimenQuery, [
-            geneticsId,
-            formData.material,
-            formData.notes,
-            formData.collection_date,
-            formData.voucher_specimen,
-            formData.greenhouse,
-            formData.field_pop_id,
-            formData.published,
-            formData.nanodrop_concentration,
-            formData.nanodrop_ratio,
-            specimen_id
-        ]);
-
-
-        //create a location entry for the new specimen
-        const locationQuery = `
-      INSERT INTO Location (specimen_id, provenance, country, state_provenance, specific_locality, lat, long)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)
-      RETURNING location_id
-      `;
-
-        const locationResult = await pool.query(locationQuery, [
-            specimen_id,
-            formData.provenance,
-            formData.country,
-            formData.state_provenance,
-            formData.specific_locality,
-            formData.lat,
-            formData.long,
-        ]);
-
-        console.log('location_id', locationResult.rows[0].location_id)
-
-        // handle the string with genomics data
-        // the string is represented in this way: (extraction_number:extraction_date, extraction_number:extraction_date format)
-        const genomicsData = parseGenomicsString(formData.genomics_string); 
-
-        console.log(genomicsData)
-
-        if(genomicsData){
-            for (const genomicsEntry of genomicsData) {
-                const genomicsQuery = `
-                INSERT INTO Genomics (extraction_number, extraction_date, specimen_id)
-                VALUES ($1, $2, $3)
-                RETURNING genomic_id`;
-          
-                const genomicRes = await pool.query(genomicsQuery, [
-                  genomicsEntry.extraction_number,
-                  genomicsEntry.extraction_date,
-                  specimen_id,
-                ]);
-
-                console.log('genomic_id', genomicRes.rows[0].genomic_id)
-            }
-
-        }
         
-        res.status(200).json()
-        return { success: true, specimen_id };
 
+        // update the specimen
+        const specimenUpdate = `
+        UPDATE Specimen
+        SET material = $1,
+            notes = $2,
+            collection_date = $3,
+            voucher_specimen = $4,
+            greenhouse = $5,
+            field_pop_id = $6,
+            published = $7,
+            nanodrop_concentration = $8,
+            nanodrop_ratio = $9,
+            genetics_id = $10
+        WHERE specimen_id = $11;
+        `
+
+        await pool.query(specimenUpdate, [formData.material, formData.notes, formData.collection_date, formData.voucher_specimen, 
+        formData.greenhouse, formData.field_pop_id, formData.published, formData.nanodrop_concentration, formData.nanodrop_ratio, geneticsId, specimen_id])
+
+
+    
+       //update location of this specimen       
+       const LocationUpdate = `
+       UPDATE Location 
+       SET provenance = $1,
+            country = $2,
+            state_provenance = $3,
+            specific_locality = $4,
+            lat  = $5,
+            long = $6
+        WHERE specimen_id = $7;           
+       `
+
+       await pool.query(LocationUpdate, [formData.provenance, formData.country, formData.state_provenance, formData.specific_locality, 
+        formData.lat, formData.long, specimen_id
+    ])
+
+    //update DNA extraction of this specimen
+    const genomicsUpdate = `
+    UPDATE Genomics
+    SET extraction_number = $1,
+    extraction_date =$2
+    WHERE specimen_id = $3;     
+    `
+    
+    await pool.query(genomicsUpdate, [formData.extraction_number, formData.extraction_date, specimen_id])
+
+    res.status(200).json()
+    return { success: true, specimen_id };
+       
     }catch(error){
         res.status(409).json({error: error.message})
         return { success: false, error: error.message };

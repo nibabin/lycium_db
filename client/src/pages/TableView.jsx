@@ -5,6 +5,7 @@ import {
     getCoreRowModel,
     getSortedRowModel,
     useReactTable,
+    getPaginationRowModel
   } from '@tanstack/react-table'
   import '../css/TableView.css'
   import { Spinner } from '@chakra-ui/react'
@@ -13,34 +14,11 @@ import {
 import EditButton from '../components/EditButton';
 import DeleteButton from '../components/DeleteButton';
 import ExportExcelButton from '../components/ExportExcelButton';
-
+import { useDataContext } from '../context/DataProvider';
 
 function TableView() {
-  const [specimen, setSpecimen] = useState([]);
 
-  const [sorting, setSorting] = useState([])
-
-
-  useEffect(() => {
-    const fetchSpecimen = async () => {
-      try {
-        const data = await SpecimenAPI.getAllSpecimen();
-        setSpecimen(data);
-      } catch (error) {
-        console.error('Error fetching specimen:', error);
-      }
-    };
-
-    fetchSpecimen();
-  }, []);
-
-  const handleEdit = (param) =>{
-    console.log("EDIT")
-  }
-
-  const handleDelete = (param) =>{
-    console.log("DELETE")
-  }
+  const { specimenData, setSpecimenData } = useDataContext();
 
   const columns = useMemo(
     () => [
@@ -56,6 +34,8 @@ function TableView() {
           );
         },
       },
+      { accessorKey: 'extraction_number', header: 'Extraction Number' },
+      { accessorKey: 'extraction_date', header: 'Extraction Date' },
       { accessorKey: 'genus', header: 'Genus' },
       { accessorKey: 'species', header: 'Species' },
       { accessorKey: 'field_pop_id', header: 'Field ID' },
@@ -82,17 +62,23 @@ function TableView() {
   );
 
   const table = useReactTable({
-    data: specimen,
+    data: specimenData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    initialState: {
+      pagination: {
+          pageSize: 10,
+      },
+    },
+    getPaginationRowModel: getPaginationRowModel()
   });
 
   return (
     <div className="table-wrapper">
-          <ExportExcelButton data={specimen} />
+          <ExportExcelButton />
 
-      {specimen.length === 0 ? <Spinner className="spinner" size="xl" /> :
+      {specimenData.length === 0 ? <Spinner className="spinner" size="xl" /> :
     <div className="tableDiv">
       <table>
         <thead>
@@ -129,7 +115,7 @@ function TableView() {
         <tbody>
           {table
             .getRowModel()
-            .rows.slice(0, 10)
+            .rows
             .map(row => {
               return (
                 <tr key={row.id}>
@@ -148,17 +134,69 @@ function TableView() {
             })}
         </tbody>
       </table>
-      
-      {/* <div>{table.getRowModel().rows.length} Rows</div>
-      <div>
-        <button onClick={() => rerender()}>Force Rerender</button>
+      <div className="table-options-wrapper">
+        <button
+          className="table-options-button"
+          onClick={() => table.setPageIndex(0)}
+          disabled={!table.getCanPreviousPage()}
+        >
+          {'<<'}
+        </button>
+        <button
+          className="table-options-button"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          {'<'}
+        </button>
+        <button
+          className="table-options-button"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          {'>'}
+        </button>
+        <button
+          className="table-options-button"
+          onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+          disabled={!table.getCanNextPage()}
+        >
+          {'>>'}
+        </button>
+        <span className="flex items-center gap-1">
+          <div>Page</div>
+          <strong>
+            {table.getState().pagination.pageIndex + 1} of{' '}
+            {table.getPageCount()}
+          </strong>
+        </span>
+        <span className="flex items-center gap-1">
+          | Go to page:
+          <input
+            type="number"
+            defaultValue={table.getState().pagination.pageIndex + 1}
+            onChange={e => {
+              const page = e.target.value ? Number(e.target.value) - 1 : 0
+              table.setPageIndex(page)
+            }}
+            className="border p-1 rounded w-16"
+          />
+        </span>
+        <select
+          value={table.getState().pagination.pageSize}
+          onChange={e => {
+            table.setPageSize(Number(e.target.value))
+          }}
+        >
+          {[10, 25, 50, 100].map(pageSize => (
+            <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
+          ))}
+        </select>
       </div>
-      <div>
-        <button onClick={() => refreshData()}>Refresh Data</button>
-      </div>
-      <pre>{JSON.stringify(sorting, null, 2)}</pre> */}
     </div>}
-    </div>
+</div>
   )
 }
 

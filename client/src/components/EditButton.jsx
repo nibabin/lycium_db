@@ -53,16 +53,27 @@ export default function EditButton({row}) {
     }
     console.log("EDIT")
     console.log(formData)
-    const x = await SpecimenAPI.createSpecimen(formData)
-    console.log(x)
-    handleClose()
-    toast({
-        title: 'Edit Successful', 
-        description: 'Successfully edited specimen data', 
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-    });
+    const response = await SpecimenAPI.createSpecimen(formData)
+    console.log(response)
+    if (response.status == 200){
+      handleClose()
+      toast({
+          title: 'Edit Successful', 
+          description: 'Successfully edited specimen data', 
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+      });
+    }
+    else{
+      toast({
+          title: 'Edit Failed', 
+          description: 'Failed to edit specimen data', 
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+      });
+    }
   }
 
 

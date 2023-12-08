@@ -2,6 +2,7 @@ import React from 'react'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import SpecimenAPI from '../../services/SpecimenAPI';
 import { useState, useEffect } from 'react';
+import { useDataContext } from '../context/DataProvider';
 
 const apiKey = import.meta.env.REACT_APP_GOOGLE_API_KEY
 
@@ -16,26 +17,7 @@ const center = {
 };
 
 function MapView() {
-  const [specimen, setSpecimen] = useState([]);
-
-    useEffect(()=>{
-        fetchSpecimen()
-
-    }, [SpecimenAPI])
-
-
-
-    const fetchSpecimen = async() =>{
-        try{
-            const data = await SpecimenAPI.getAllSpecimen()
-            setSpecimen(data)
-            console.log(data[0])
-
-        }catch(error){
-            console.error('Error catching specimen:', error)
-        }
-
-    }
+  const { specimenData, setSpecimenData } = useDataContext();
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -65,10 +47,9 @@ function MapView() {
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
-        { /* Child components, such as markers, info windows, etc. */ }
         <></>
         
-        {specimen.map(s=>{
+        {specimenData.map(s=>{
           return(
             <Marker position={{ lat: s.lat, lng: s.long }}/>
           )
