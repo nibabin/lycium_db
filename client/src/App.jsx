@@ -10,6 +10,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import AddButton from './components/AddButton'
 import SpeciesList from './pages/SpeciesList'
 import { DataProvider } from './context/DataProvider'
+import SpecimenData from './pages/SpecimenData'
 
 function App() {
   let element = useRoutes([
@@ -29,6 +30,10 @@ function App() {
     {
       path:'/species/:id',
       element: <SpecimenList/>
+    },
+    {
+      path:'/specimen/:id',
+      element: <SpecimenData/>
     },
     
 

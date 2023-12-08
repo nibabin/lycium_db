@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@chakra-ui/react'
 import '../css/SpecimenList.css'
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function SpecimenList(){
@@ -13,14 +14,23 @@ export default function SpecimenList(){
 
     useEffect(()=>{
         fetchSpecimen()
-
     }, [SpecimenAPI])
-
-
 
     const fetchSpecimen = async() =>{
         try{
-            const data = await SpecimenAPI.getAllSpecimen()
+            const data = await SpecimenAPI.getFilteredSpecimen({
+                filterParameters:[
+                    {
+                        "type": "filter",
+                        "parameter": "genetics_id",
+                        "operator": "equal",
+                        "value": id
+                    }
+                ]
+            })
+
+            console.log(data)
+
             setSpecimen(data)
             console.log(data[0])
 
@@ -28,6 +38,12 @@ export default function SpecimenList(){
             console.error('Error catching specimen:', error)
         }
 
+    }
+
+    let navigate = useNavigate(); 
+    const handleViewSpecimenClick = (id) =>{ 
+        let path = `/specimen/${id}`; 
+        navigate(path);
     }
 
     const monthNames = [
@@ -48,7 +64,7 @@ export default function SpecimenList(){
                     <p><strong>Collection Location:</strong> {s.state_provenance}, {s.country}</p>  
 
                     <div className='specimen-buttons'>
-                        <Button className="specimen-button" colorScheme='teal'>View</Button>
+                        <Button onClick={() => handleViewSpecimenClick(s.specimen_id)} className="specimen-button" colorScheme='teal'>View</Button>
                         <Button className="specimen-button" colorScheme='teal'>Delete</Button>
                     </div>  
                 </div>

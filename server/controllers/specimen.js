@@ -1,6 +1,9 @@
 import { pool } from '../config/database.js'
 
-
+const sortStandardizeer = {
+    'ascending': "ASC",
+    'descending': "DESC"
+}
 
 /**
  * 
@@ -48,9 +51,14 @@ const getFilteredSpecimen = async(req, res) =>{
         for (const param of params){
             //apply sorting logic
             const type = param.type
-            if(type == 'sorting'){
-                const operator = param.operator;
+            console.log(type)
+            if(type == 'sort'){
+                const operator = sortStandardizeer[param.operator];
+                console.log("TEST")
+                console.log(operator)
                 const parameter = param.parameter
+
+                
 
                 if(addComma){
                     sortingQuery += `, ${parameter} ${operator}`
@@ -123,6 +131,7 @@ const getFilteredSpecimen = async(req, res) =>{
         console.log(query);
 
         const result = await pool.query(query);
+        console.log(result.rows)
         res.status(200).json(result.rows);
 
     }catch(error){
