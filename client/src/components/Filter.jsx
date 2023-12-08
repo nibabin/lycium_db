@@ -4,8 +4,10 @@ import { Button, Select, Input } from '@chakra-ui/react'
 import AddButton from './AddButton'
 import FilterOption from './FilterOption'
 import SpecimenAPI from '../../services/SpecimenAPI';
+import { useDataContext } from '../context/DataProvider';
 
 export default function Filter(){
+    const { specimenData, setSpecimenData } = useDataContext();
 
     const defaultCurFilter = {
         'type': 'filter',
@@ -240,10 +242,12 @@ export default function Filter(){
     ]
 
     const submitFilters = async() =>{
-        const jsonArray = JSON.stringify(currentFilters);
-        console.log(jsonArray)
-        const x = await SpecimenAPI.getFilteredSpecimen(currentFilters)
-        console.log(x)
+        let filter = {
+            filterParameters: currentFilters
+        }
+        console.log(filter)
+        const x = await SpecimenAPI.getFilteredSpecimen(filter)
+        setSpecimenData(x)
     }
 
     const addDefaultFilter = () =>{

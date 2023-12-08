@@ -55,7 +55,7 @@ export default function EditButton({row}) {
     console.log(formData)
     const response = await SpecimenAPI.createSpecimen(formData)
     console.log(response)
-    if (response.status == 200){
+    if (response.success == true){
       handleClose()
       toast({
           title: 'Edit Successful', 

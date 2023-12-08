@@ -246,8 +246,7 @@ const addSpecimen = async(req, res) =>{
         console.log('genomic_id', genomicRes.rows[0].genomic_id)
 
         
-        res.status(200).json()
-        return { success: true, specimenId };
+        return res.status(200).json({ success: true, specimenId });
 
     }catch(error){
         res.status(409).json({error: error.message})
@@ -265,7 +264,8 @@ const deleteSpecimen = async(req, res) =>{
                         WHERE specimen_id = $1
                     `
         await pool.query(query, [specimen_id])
-        res.status(200).json({})
+        console.log("TEST")
+        return res.status(200).json({ success: true, specimen_id });
 
     }catch(error){
         res.status(409).json({error: error.message})
@@ -343,8 +343,7 @@ const updateSpecimen = async(req, res) =>{
     
     await pool.query(genomicsUpdate, [formData.extraction_number, formData.extraction_date, specimen_id])
 
-    res.status(200).json()
-    return { success: true, specimen_id };
+    return res.status(200).json({ success: true, specimenId });
        
     }catch(error){
         res.status(409).json({error: error.message})

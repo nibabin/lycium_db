@@ -19,8 +19,8 @@ export default function DeleteButton({ row }) {
 
   const confirmDelete = async () => {
     try {
-      const response =  await SpecimenAPI.deleteSpecimen(row.specimen_id);
-      if (response.status === 200){
+      const response = await SpecimenAPI.deleteSpecimen(row.specimen_id);
+      if (response.success === true){
         toast({
           title: 'Delete Successful',
           description: 'Successfully deleted specimen, please refresh the page to see the new table.',
@@ -41,7 +41,6 @@ export default function DeleteButton({ row }) {
     } catch (error) {
       console.error('Error deleting specimen:', error);
     } finally {
-      // Close the modal after deleting or in case of an error
       onClose();
     }
   };
