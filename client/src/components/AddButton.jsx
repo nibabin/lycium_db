@@ -45,8 +45,14 @@ export default function AddButton() {
       if (formData.hasOwnProperty(key)) { 
         const value = formData[key];
         if (value == ''){
-          if (key == 'collection_date' || key == 'latitude' || key == 'longitude' || key == 'nanodrop_concentration' || key == 'nanodrop_ratio' || key == 'published' || key == 'extraction_date'){
+          if (key == 'collection_date' || key == 'lat' || key == 'long' || key == 'nanodrop_concentration' || key == 'nanodrop_ratio' || key == 'published' || key == 'extraction_date'){
             formData[key] = undefined
+          }
+          if (key == 'published' && (value == 'true' || value == 'True')){
+            formData['published'] = true
+          }
+          if (key == 'published' && (value == 'false' || value == 'False')){
+            formData['published'] = false
           }
         }
       }
@@ -56,7 +62,7 @@ export default function AddButton() {
     if (response.success == true){
       handleClose()
       toast({
-          title: 'Crreation Successful', 
+          title: 'Creation Successful', 
           description: 'Successfully created new specimen', 
           status: 'success',
           duration: 3000,

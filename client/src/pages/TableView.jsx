@@ -33,8 +33,11 @@ function TableView() {
         },
       },
       { accessorKey: 'extraction_number', header: 'Extraction Number' },
-      { accessorKey: 'extraction_date', header: 'Extraction Date' },
-      { accessorKey: 'genus', header: 'Genus' },
+      { accessorKey: 'extraction_date', header: 'Extraction Date',
+        cell: ({ row }) => {
+          const collectionDate = new Date(row.original.collection_date);
+          return collectionDate.toLocaleDateString();
+        }, },      { accessorKey: 'genus', header: 'Genus' },
       { accessorKey: 'species', header: 'Species' },
       { accessorKey: 'field_pop_id', header: 'Field ID' },
       { accessorKey: 'greenhouse', header: 'Greenhouse' },
@@ -46,10 +49,10 @@ function TableView() {
         }, },
       { accessorKey: 'provenance', header: 'Provenance' },
       { accessorKey: 'country', header: 'Country' },
-      { accessorKey: 'state_province', header: 'State' },
+      { accessorKey: 'state_provenance', header: 'State' },
       { accessorKey: 'specific_locality', header: 'Specific Local' },
-      { accessorKey: 'latitude', header: 'Latitude' },
-      { accessorKey: 'longitude', header: 'Longitude' },
+      { accessorKey: 'lat', header: 'Latitude' },
+      { accessorKey: 'long', header: 'Longitude' },
       { accessorKey: 'notes', header: 'Notes' },
       { accessorKey: 'material', header: 'Material' },
       { accessorKey: 'nanodrop_concentration', header: 'Nanodrop Concentration' },

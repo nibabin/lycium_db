@@ -18,6 +18,7 @@ export function DataProvider({ children }) {
       try {
         if (specimenData.length === 0){
           const response = await SpecimenAPI.getAllSpecimen();
+          console.log(response)
           setSpecimenData(response);
         }
       } catch (error) {

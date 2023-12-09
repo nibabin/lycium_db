@@ -258,6 +258,7 @@ const addSpecimen = async(req, res) =>{
         return res.status(200).json({ success: true, specimenId });
 
     }catch(error){
+        console.log(error)
         res.status(409).json({error: error.message})
         return { success: false, error: error.message };
 
@@ -286,6 +287,8 @@ const updateSpecimen = async(req, res) =>{
 
         const specimen_id = req.params.specimen_id
         const formData = req.body
+
+        console.log(formData)
 
         //check if this genetics already exist and if no - create a new one
         const geneticsQuery = 'SELECT genetics_id FROM Genetics WHERE genus = $1 AND species = $2';
@@ -352,9 +355,10 @@ const updateSpecimen = async(req, res) =>{
     
     await pool.query(genomicsUpdate, [formData.extraction_number, formData.extraction_date, specimen_id])
 
-    return res.status(200).json({ success: true, specimenId });
+    return res.status(200).json({ success: true, specimen_id });
        
     }catch(error){
+        console.log(error)
         res.status(409).json({error: error.message})
         return { success: false, error: error.message };
 

@@ -5,9 +5,10 @@ import AddButton from './AddButton'
 import FilterOption from './FilterOption'
 import SpecimenAPI from '../../services/SpecimenAPI';
 import { useDataContext } from '../context/DataProvider';
-
+import { useToast } from '@chakra-ui/react'
 export default function Filter(){
     const { specimenData, setSpecimenData } = useDataContext();
+    const toast = useToast()
 
     const defaultCurFilter = {
         'type': 'filter',
@@ -280,12 +281,31 @@ export default function Filter(){
     ]
 
     const submitFilters = async() =>{
-        setSpecimenData([])
-        let filter = {
-            filterParameters: currentFilters
+        try{
+            //setSpecimenData([])
+            let filter = {
+                filterParameters: currentFilters
+            }
+            const response = await SpecimenAPI.getFilteredSpecimen(filter)
+            setSpecimenData(response)
+            toast({
+                title: 'Filtering Successful', 
+                description: 'Successfully filtered specimen data', 
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+            
+            })
+        } catch(err){
+            toast({
+                title: 'Filtering Error', 
+                description: 'There was an issue filtering, please ensure you have selected all valid options', 
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+            });
         }
-        const response = await SpecimenAPI.getFilteredSpecimen(filter)
-        setSpecimenData(response)
+
 
     }
 
