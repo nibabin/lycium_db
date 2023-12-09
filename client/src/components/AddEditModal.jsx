@@ -79,8 +79,8 @@ export default function AddEditModal({
               <FormLabel>Field ID</FormLabel>
               <Input
                 type="text"
-                name="field_id"
-                value={formData.field_id}
+                name="field_pop_id"
+                value={formData.field_pop_id}
                 onChange={handleChange}
               />
               <FormLabel>Greenhouse</FormLabel>
@@ -93,8 +93,8 @@ export default function AddEditModal({
               <FormLabel>Voucher</FormLabel>
               <Input
                 type="text"
-                name="voucher"
-                value={formData.voucher}
+                name="voucher_specimen"
+                value={formData.voucher_specimen}
                 onChange={handleChange}
               />
               <FormLabel>Collection Date</FormLabel>
@@ -131,29 +131,29 @@ export default function AddEditModal({
               <FormLabel>State</FormLabel>
               <Input
                 type="text"
-                name="state"
-                value={formData.state}
+                name="state_provenance"
+                value={formData.state_provenance}
                 onChange={handleChange}
               />
               <FormLabel>Specific Local</FormLabel>
               <Input
                 type="text"
-                name="specific_local"
-                value={formData.specific_local}
+                name="specific_locality"
+                value={formData.specific_locality}
                 onChange={handleChange}
               />
               <FormLabel>Latitude</FormLabel>
               <Input
                 type="number"
-                name="latitude"
-                value={formData.latitude}
+                name="lat"
+                value={formData.lat}
                 onChange={handleChange}
               />
               <FormLabel>Longitude</FormLabel>
               <Input
                 type="number"
-                name="longitude"
-                value={formData.longitude}
+                name="long"
+                value={formData.long}
                 onChange={handleChange}
               />
               <FormLabel>Notes</FormLabel>

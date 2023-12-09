@@ -28,7 +28,6 @@ export default function AddButton() {
     nanodrop_concentration: '',
     nanodrop_ratio: '',
     published: '',
-    extraction_date: '',
     extraction_number: '',
     extraction_date: '',
   });

@@ -63,7 +63,7 @@ export default function Filter(){
         },
         {
             name: 'Field ID',
-            value: 'field_id',
+            value: 'field_pop_id',
             filterRadioOptions: [
                 'equal',
                 'contains'
@@ -87,7 +87,7 @@ export default function Filter(){
         },
         {
             name: 'Voucher',
-            value: 'voucher',
+            value: 'voucher_specimen',
             filterRadioOptions: [
                 'equal',
                 'contains'
@@ -137,7 +137,7 @@ export default function Filter(){
         },
         {
             name: 'State',
-            value: 'state',
+            value: 'state_provenance',
             filterRadioOptions: [
                 'equal',
                 'contains'
@@ -149,7 +149,7 @@ export default function Filter(){
         },
         {
             name: 'Specific Local',
-            value: 'specific_local',
+            value: 'specific_locality',
             filterRadioOptions: [
                 'equal',
                 'contains'
@@ -161,7 +161,7 @@ export default function Filter(){
         },
         {
             name: 'Latitude',
-            value: 'latitude',
+            value: 'lat',
             filterRadioOptions: [
                 'equal',
                 'contains',
@@ -175,7 +175,7 @@ export default function Filter(){
         },
         {
             name: 'Longitude',
-            value: 'longitude',
+            value: 'long',
             filterRadioOptions: [
                 'equal',
                 'contains',
@@ -190,6 +190,18 @@ export default function Filter(){
         {
             name: 'Notes',
             value: 'notes',
+            filterRadioOptions: [
+                'equal',
+                'contains'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
+            ]
+        },
+        {
+            name: 'Material',
+            value: 'material',
             filterRadioOptions: [
                 'equal',
                 'contains'
@@ -233,6 +245,32 @@ export default function Filter(){
             filterRadioOptions: [
                 'equal',
                 'contains'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
+            ]
+        },
+        {
+            name: 'Extraction Number',
+            value: 'extraction_number',
+            filterRadioOptions: [
+                'equal',
+                'contains'
+            ],
+            sortRadioOptions:[
+                'ascending',
+                'descending'
+            ]
+        },
+        {
+            name: 'Extraction Date',
+            value: 'extraction_date',
+            filterRadioOptions: [
+                'equal',
+                'contains',
+                'greater',
+                'less'
             ],
             sortRadioOptions:[
                 'ascending',
