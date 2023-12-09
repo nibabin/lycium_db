@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 
 export default function SpecimenList(){
     const { id } = useParams();
-    console.log(id)
     const [specimen, setSpecimen] = useState([]);
 
     useEffect(()=>{
@@ -28,12 +27,7 @@ export default function SpecimenList(){
                     }
                 ]
             })
-
-            console.log(data)
-
             setSpecimen(data)
-            console.log(data[0])
-
         }catch(error){
             console.error('Error catching specimen:', error)
         }
@@ -51,10 +45,9 @@ export default function SpecimenList(){
         'July', 'August', 'September', 'October', 'November', 'December'
       ];
 
-
-
     return(
         <div className='specimen-container'>
+            {specimen.length === 0 && <p>No specimens found.</p>}
             {specimen.map(s =>{
                 return(
                 <div className='specimen-item'>

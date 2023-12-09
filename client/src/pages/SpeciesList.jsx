@@ -14,14 +14,10 @@ export default function SpeciesList(){
 
     }, [GeneticsAPI])
 
-
-
     const fetchSpecies = async() =>{
         try{
             const data = await GeneticsAPI.getAllGenetics({})
             setSpecies(data)
-            console.log(data)
-
         }catch(error){
             console.error('Error catching species:', error)
         }
@@ -34,15 +30,15 @@ export default function SpeciesList(){
         navigate(path);
     }
 
-
     return(
         <div className='species-container'>
+            {species.length === 0 && <p>No species found.</p>}
             {species.map((s, idx) => {
                 return (
                     <div key={idx} className='species-item'>
-                        <p>Species: {s.species}</p>
-                        <p>Genus: {s.genus}</p>
-                        <Button onClick={() => handleViewSpecimenClick(s.genetics_id)} colorScheme='teal'>View Specimen</Button>
+                        <p><strong>Species</strong>: {s.species}</p>
+                        <p><strong>Genus</strong>: {s.genus}</p>
+                        <Button className="species-button" onClick={() => handleViewSpecimenClick(s.genetics_id)} colorScheme='teal'>View Specimen</Button>
                     </div>
                 );
             })}

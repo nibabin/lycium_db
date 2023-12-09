@@ -26,8 +26,6 @@ function MapView() {
     });
   };
 
-  
-
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyBHC4fDrFVwAG87KIot6WIcSw3d_GjvR60'
@@ -49,7 +47,6 @@ function MapView() {
 
   useEffect(() => {
     if (map && specimenData) {
-      console.log("CHANGING")
       const bounds = new window.google.maps.LatLngBounds(center);
       specimenData.forEach((s) => {
         if (s.lat && s.long) {
@@ -61,7 +58,6 @@ function MapView() {
   }, [map, specimenData]);
 
   
-
   return <><Filter />
   {isLoaded ? (
       <GoogleMap

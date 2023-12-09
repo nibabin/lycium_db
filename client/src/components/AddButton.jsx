@@ -13,22 +13,24 @@ export default function AddButton() {
   const [formData, setFormData] = useState({
     genus: '',
     species: '',
-    field_id: '',
+    field_pop_id: '',
     greenhouse: '',
-    voucher: '',
+    voucher_specimen: '',
     collection_date: '',
     provenance: '',
     country: '',
-    state: '',
-    specific_local: '',
-    latitude: '',
-    longitude: '',
+    state_provenance: '',
+    specific_locality: '',
+    lat: '',
+    long: '',
     notes: '',
     material: '',
     nanodrop_concentration: '',
     nanodrop_ratio: '',
     published: '',
-    extraction_data: '',
+    extraction_date: '',
+    extraction_number: '',
+    extraction_date: '',
   });
 
   const handleOpen = () => {
@@ -44,26 +46,35 @@ export default function AddButton() {
       if (formData.hasOwnProperty(key)) { 
         const value = formData[key];
         if (value == ''){
-          if (key == 'collection_date' || key == 'latitude' || key == 'longitude' || key == 'nanodrop_concentration' || key == 'nanodrop_ratio' || key == 'published'){
+          if (key == 'collection_date' || key == 'latitude' || key == 'longitude' || key == 'nanodrop_concentration' || key == 'nanodrop_ratio' || key == 'published' || key == 'extraction_date'){
             formData[key] = undefined
           }
         }
       }
     }
 
-    console.log(formData)
-    const x = await SpecimenAPI.createSpecimen(formData)
-    console.log(x)
-    handleClose()
-    toast({
-        title: 'Crreation Successful', 
-        description: 'Successfully created new specimen', 
-        status: 'success',
+    const response = await SpecimenAPI.createSpecimen(formData)
+    if (response.success == true){
+      handleClose()
+      toast({
+          title: 'Crreation Successful', 
+          description: 'Successfully created new specimen', 
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+      });
+    }
+    else{
+      toast({
+        title: 'Creation Failed', 
+        description: 'Failed to create new specimen', 
+        status: 'error',
         duration: 3000,
         isClosable: true,
     });
-  }
+    }
 
+  }
 
   return (
     <>

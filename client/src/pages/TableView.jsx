@@ -1,16 +1,13 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import SpecimenAPI from '../../services/SpecimenAPI'; // Adjust the import path as necessary
+import React, { useMemo } from 'react';
 import {
-    flexRender,
-    getCoreRowModel,
-    getSortedRowModel,
-    useReactTable,
-    getPaginationRowModel
-  } from '@tanstack/react-table'
-  import '../css/TableView.css'
-  import { Spinner } from '@chakra-ui/react'
-
-  import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  useReactTable,
+  getPaginationRowModel
+} from '@tanstack/react-table'
+import '../css/TableView.css'
+import { Spinner } from '@chakra-ui/react'
 import EditButton from '../components/EditButton';
 import DeleteButton from '../components/DeleteButton';
 import ExportExcelButton from '../components/ExportExcelButton';

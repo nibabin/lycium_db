@@ -27,8 +27,6 @@ export default function AddEditModal({
   initialValues,
 }) {
   const [formData, setFormData] = useState(initialValues);
-
-  // NEEDS
   useEffect(() => {
     if (isEditing) {
       const keys = Object.keys(initialValues);
@@ -182,18 +180,33 @@ export default function AddEditModal({
               <FormLabel>Nanodrop Ratio</FormLabel>
               <Input
                 type="number"
-                name="material"
+                name="nanodrop_ratio"
                 value={formData.nanodrop_ratio}
                 onChange={handleChange}
               />
-              <FormLabel>Extraction Data</FormLabel>
+              <FormLabel>Extraction Number</FormLabel>
               <Input
                 type="text"
-                name="extraction_data"
-                placeholder='extraction_number:extraction_date, extraction_number:extraction_date, ...'
-                value={formData.nanodrop_ratio}
+                name="extraction_number"
+                value={formData.extraction_number}
                 onChange={handleChange}
               />
+              <FormLabel>Extraction Date</FormLabel>
+              <div className="datepicker-div"> 
+              <DatePicker
+                className="date-picker"
+                  selected={
+                    formData.extraction_date ? new Date(formData.extraction_date) : null
+                  }
+                  onChange={(date) =>
+                    setFormData({
+                      ...formData,
+                      extraction_date: date.toISOString(),
+                    })
+                  }
+                  dateFormat="yyyy-MM-dd"
+                />
+                </div>
               <div>
                 <FormLabel>Published</FormLabel>
                 <input

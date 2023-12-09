@@ -2,8 +2,6 @@ import React from 'react'
 import '../css/Navigation.css'
 import { Button } from '@chakra-ui/react'
 
-
-
 const Navigation = () => {
     return (
         <div className='navigation'>

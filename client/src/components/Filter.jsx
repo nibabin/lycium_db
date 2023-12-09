@@ -242,12 +242,13 @@ export default function Filter(){
     ]
 
     const submitFilters = async() =>{
+        setSpecimenData([])
         let filter = {
             filterParameters: currentFilters
         }
-        console.log(filter)
-        const x = await SpecimenAPI.getFilteredSpecimen(filter)
-        setSpecimenData(x)
+        const response = await SpecimenAPI.getFilteredSpecimen(filter)
+        setSpecimenData(response)
+
     }
 
     const addDefaultFilter = () =>{
@@ -257,11 +258,9 @@ export default function Filter(){
     }
 
     const onFilterOptionChange = (type, value, index) =>{
-        console.log(type, value, index)
         const tempFilters = [...currentFilters]
         tempFilters[index][type] = value
         setCurrentFilters(tempFilters)
-        console.log(tempFilters)
     }
 
     const onFilterOptionClear = () =>{

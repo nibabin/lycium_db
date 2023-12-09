@@ -31,7 +31,6 @@ export default function FilterOption({ onChange, possibleFilters, index }){
 
       const handleRadioChange = (e) => {
         setSelectedRadio(e.target.value);
-        console.log(e.target.value)
         onChange('operator', e.target.value, index)
       }
 

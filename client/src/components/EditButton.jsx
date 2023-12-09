@@ -30,6 +30,8 @@ export default function EditButton({row}) {
     nanodrop_concentration: row.nanodrop_concentration,
     nanodrop_ratio: row.nanodrop_ratio,
     published: row.published,
+    extraction_date: row.extraction_date,
+    extraction_number: row.extraction_number,
   });
 
   const handleOpen = () => {
@@ -42,19 +44,16 @@ export default function EditButton({row}) {
 
   const handleFormSubmit = async (formData) =>{
     for (const key in formData) {
-      if (formData.hasOwnProperty(key)) { // Ensure it's a direct property and not inherited
+      if (formData.hasOwnProperty(key)) { 
         const value = formData[key];
         if (value == ''){
-          if (key == 'collection_date' || key == 'latitude' || key == 'longitude' || key == 'nanodrop_concentration' || key == 'nanodrop_ratio' || key == 'published'){
+          if (key == 'collection_date' || key == 'latitude' || key == 'longitude' || key == 'nanodrop_concentration' || key == 'nanodrop_ratio' || key == 'published' || key == 'extraction_date'){
             formData[key] = undefined
           }
         }
       }
     }
-    console.log("EDIT")
-    console.log(formData)
     const response = await SpecimenAPI.createSpecimen(formData)
-    console.log(response)
     if (response.success == true){
       handleClose()
       toast({
