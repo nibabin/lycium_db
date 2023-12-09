@@ -28,8 +28,8 @@ export default function Filter(){
 
     const [existingFilters, setExistingFilters] = useState([
         {
-            name: 'Specimen',
-            value: 'specimen',
+            name: 'Species',
+            value: 'species',
             radioOptions: [
                 'equal',
                 'contains'
@@ -51,8 +51,8 @@ export default function Filter(){
             ]
         },
         {
-            name: 'Specimen',
-            value: 'specimen',
+            name: 'Species',
+            value: 'species',
             filterRadioOptions: [
                 'equal',
                 'contains'
@@ -283,6 +283,7 @@ export default function Filter(){
     const submitFilters = async() =>{
         try{
             //setSpecimenData([])
+            console.log(currentFilters)
             let filter = {
                 filterParameters: currentFilters
             }
