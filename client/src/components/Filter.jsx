@@ -245,7 +245,6 @@ export default function Filter(){
             value: 'published',
             filterRadioOptions: [
                 'equal',
-                'contains'
             ],
             sortRadioOptions:[
                 'ascending',

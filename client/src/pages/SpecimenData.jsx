@@ -41,7 +41,7 @@ export default function SpecimenData(){
             <p><strong>Field ID</strong>: {specimen.field_pop_id}</p>
             <p><strong>Greenhouse</strong>: {specimen.greenhouse}</p>
             <p><strong>Voucher</strong>: {specimen.voucher_specimen}</p>
-            <p><strong>Collection Date:</strong> {new Date(s.collection_date).getDate()} {monthNames[new Date(s.collection_date).getMonth()]} {new Date(s.collection_date).getFullYear()}</p>
+            <p><strong>Collection Date:</strong> {new Date(specimen.collection_date).getDate()} {monthNames[new Date(specimen.collection_date).getMonth()]} {new Date(specimen.collection_date).getFullYear()}</p>
             <p><strong>Provenance</strong>: {specimen.provenance}</p>
             <p><strong>Country</strong>: {specimen.country}</p>
             <p><strong>State Provenance</strong>: {specimen.state_province}</p>

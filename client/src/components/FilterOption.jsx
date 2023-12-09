@@ -45,7 +45,6 @@ export default function FilterOption({ onChange, possibleFilters, index }){
         setTypeSelection(selectedOption);
         setFilterText('')
         onChange('type', e.target.value, index)
-        onChange('parameter', '', index)
     }
 
     return(
