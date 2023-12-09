@@ -45,7 +45,6 @@ function App() {
       <ChakraProvider>
         <DataProvider>
           <Navigation />
-          <Filter/>
 
           { element }
         </DataProvider>

@@ -15,6 +15,7 @@ import EditButton from '../components/EditButton';
 import DeleteButton from '../components/DeleteButton';
 import ExportExcelButton from '../components/ExportExcelButton';
 import { useDataContext } from '../context/DataProvider';
+import Filter from '../components/Filter';
 
 function TableView() {
 
@@ -75,6 +76,8 @@ function TableView() {
   });
 
   return (
+    <>
+    <Filter/>
     <div className="table-wrapper">
           <ExportExcelButton />
 
@@ -197,6 +200,7 @@ function TableView() {
       </div>
     </div>}
 </div>
+</>
   )
 }
 
