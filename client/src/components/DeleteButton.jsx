@@ -6,7 +6,7 @@ import {
 } from '@chakra-ui/react';
 import SpecimenAPI from '../../services/SpecimenAPI';
 import { DeleteIcon } from '@chakra-ui/icons';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Tooltip } from '@chakra-ui/react';
 
 export default function DeleteButton({ row }) {
   const toast = useToast();
@@ -47,9 +47,12 @@ export default function DeleteButton({ row }) {
 
   return (
     <div className="delete-button">
+    <Tooltip hasArrow label="Delete Entry" fontSize="md" openDelay={800}>
       <Button colorScheme="teal" onClick={handleDelete}>
         <DeleteIcon />
       </Button>
+    </Tooltip>
+
 
       {/* Confirmation Modal */}
       <Modal isOpen={isOpen} onClose={onClose}>
