@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import SpecimenAPI from '../../services/SpecimenAPI';
 import { VStack, Text } from '@chakra-ui/react';
-
+import '../css/SpecimenData.css'
+import EditButton from '../components/EditButton';
+import DeleteButton
+ from '../components/DeleteButton';
 export default function SpecimenData() {
   const { id } = useParams();
   const [specimen, setSpecimen] = useState(null);
@@ -30,7 +33,7 @@ export default function SpecimenData() {
   }
 
   return (
-    <VStack spacing={4} align='stretch'>
+    <VStack className="specimen-cont" spacing={2} align='stretch'>
       <Text><strong>Genus</strong>: {specimen.genus}</Text>
       <Text><strong>Species</strong>: {specimen.species}</Text>
       <Text><strong>Extraction Number</strong>: {specimen.extraction_number}</Text>
@@ -50,6 +53,10 @@ export default function SpecimenData() {
       <Text><strong>Nanodrop Concentration</strong>: {specimen.nanodrop_concentration}</Text>
       <Text><strong>Nanodrop Ratio</strong>: {specimen.nanodrop_ratio}</Text>
       <Text><strong>Published</strong>: {specimen.published}</Text>
+      <div className="edit-div">
+        <EditButton row={specimen} />
+        <DeleteButton row={specimen} />
+      </div>
     </VStack>
   );
 }

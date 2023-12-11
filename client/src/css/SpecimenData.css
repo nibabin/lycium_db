@@ -1,0 +1,15 @@
+.specimen-cont{
+    background-color: aliceblue;
+    margin: 50px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.edit-div{
+    display: flex;
+    justify-content: center;
+}
+
+.edit-div button{
+    margin: 10px;
+}

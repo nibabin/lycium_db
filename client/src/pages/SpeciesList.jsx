@@ -47,7 +47,7 @@ export default function SpeciesList(){
                     <div key={idx} className='species-item'>
                         <p><strong>Species</strong>: {s.species}</p>
                         <p><strong>Genus</strong>: {s.genus}</p>
-                        <Button className="species-button" onClick={() => handleViewSpecimenClick(s.genetics_id)} colorScheme='teal'>View Specimen</Button>
+                        <Button className="species-button" onClick={() => handleViewSpecimenClick(s.genetics_id)} colorScheme='teal'>View</Button>
                     </div>
                 ) 
             })}

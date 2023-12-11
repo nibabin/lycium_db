@@ -80,9 +80,6 @@ export default function SpecimenList(){
                     >
                       View
                     </Button>
-                    <Button className="specimen-button" colorScheme='teal'>
-                      Delete
-                    </Button>
                   </div>
                 </div>
               ))}

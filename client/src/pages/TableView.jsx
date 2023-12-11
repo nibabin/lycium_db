@@ -87,10 +87,10 @@ function TableView() {
           <table>
             <thead>
               {table.getHeaderGroups().map(headerGroup => (
-                <tr key={headerGroup.id}>
+                <tr key={headerGroup.specimen_id}>
                   {headerGroup.headers.map(header => {
                     return (
-                      <th className="tableHeader" key={header.id} colSpan={header.colSpan}>
+                      <th className="tableHeader" key={header.specimen_id} colSpan={header.colSpan}>
                         {header.isPlaceholder ? null : (
                           <div
                             {...{
@@ -122,10 +122,10 @@ function TableView() {
                 .rows
                 .map(row => {
                   return (
-                    <tr key={row.id}>
+                    <tr key={row.specimen_id}>
                       {row.getVisibleCells().map(cell => {
                         return (
-                          <td className="tableCell"  key={cell.id}>
+                          <td className="tableCell"  key={cell.specimen_id}>
                             {flexRender(
                               cell.column.columnDef.cell,
                               cell.getContext()
