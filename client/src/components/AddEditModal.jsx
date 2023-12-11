@@ -17,7 +17,7 @@ import {
 import '../css/AddEditModal.css'
 
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'; 
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default function AddEditModal({
   isOpen,
@@ -34,7 +34,7 @@ export default function AddEditModal({
         if (initialValues[key] === null || initialValues[key] === undefined) {
           initialValues[key] = '';
         }
-      }    
+      }
       setFormData(initialValues);
     }
   }, [isEditing, initialValues, isOpen]);
@@ -68,6 +68,7 @@ export default function AddEditModal({
                 name="genus"
                 value={formData.genus}
                 onChange={handleChange}
+                marginBottom={4}
               />
               <FormLabel>Species</FormLabel>
               <Input
@@ -75,6 +76,7 @@ export default function AddEditModal({
                 name="species"
                 value={formData.species}
                 onChange={handleChange}
+                marginBottom={4}
               />
               <FormLabel>Field ID</FormLabel>
               <Input
@@ -82,6 +84,7 @@ export default function AddEditModal({
                 name="field_pop_id"
                 value={formData.field_pop_id}
                 onChange={handleChange}
+                marginBottom={4}
               />
               <FormLabel>Greenhouse</FormLabel>
               <Input
@@ -89,6 +92,7 @@ export default function AddEditModal({
                 name="greenhouse"
                 value={formData.greenhouse}
                 onChange={handleChange}
+                marginBottom={4}
               />
               <FormLabel>Voucher</FormLabel>
               <Input
@@ -96,9 +100,10 @@ export default function AddEditModal({
                 name="voucher_specimen"
                 value={formData.voucher_specimen}
                 onChange={handleChange}
+                marginBottom={4}
               />
               <FormLabel>Collection Date</FormLabel>
-              <div className="datepicker-div"> 
+              <div className="datepicker-div">
               <DatePicker
                 className="date-picker"
                   selected={
@@ -111,15 +116,17 @@ export default function AddEditModal({
                     })
                   }
                   dateFormat="yyyy-MM-dd"
+                  marginBottom={4}
                 />
                 </div>
               <FormLabel>Provenance</FormLabel>
-              
+
               <Input
                 type="text"
                 name="provenance"
                 value={formData.provenance}
                 onChange={handleChange}
+                marginBottom={4}
               />
               <FormLabel>Country</FormLabel>
               <Input
@@ -127,6 +134,7 @@ export default function AddEditModal({
                 name="country"
                 value={formData.country}
                 onChange={handleChange}
+                marginBottom={4}
               />
               <FormLabel>State</FormLabel>
               <Input
@@ -134,6 +142,7 @@ export default function AddEditModal({
                 name="state_provenance"
                 value={formData.state_provenance}
                 onChange={handleChange}
+                marginBottom={4}
               />
               <FormLabel>Specific Local</FormLabel>
               <Input
@@ -141,6 +150,7 @@ export default function AddEditModal({
                 name="specific_locality"
                 value={formData.specific_locality}
                 onChange={handleChange}
+                marginBottom={4}
               />
               <FormLabel>Latitude</FormLabel>
               <Input
@@ -148,6 +158,7 @@ export default function AddEditModal({
                 name="lat"
                 value={formData.lat}
                 onChange={handleChange}
+                marginBottom={4}
               />
               <FormLabel>Longitude</FormLabel>
               <Input
@@ -155,6 +166,7 @@ export default function AddEditModal({
                 name="long"
                 value={formData.long}
                 onChange={handleChange}
+                marginBottom={4}
               />
               <FormLabel>Notes</FormLabel>
               <Textarea
@@ -162,6 +174,7 @@ export default function AddEditModal({
                 name="notes"
                 value={formData.notes}
                 onChange={handleChange}
+                marginBottom={4}
               />
               <FormLabel>Material</FormLabel>
               <Input
@@ -169,6 +182,7 @@ export default function AddEditModal({
                 name="material"
                 value={formData.material}
                 onChange={handleChange}
+                marginBottom={4}
               />
               <FormLabel>Nanodrop Concentration</FormLabel>
               <Input
@@ -176,6 +190,7 @@ export default function AddEditModal({
                 name="nanodrop_concentration"
                 value={formData.nanodrop_concentration}
                 onChange={handleChange}
+                marginBottom={4}
               />
               <FormLabel>Nanodrop Ratio</FormLabel>
               <Input
@@ -183,6 +198,7 @@ export default function AddEditModal({
                 name="nanodrop_ratio"
                 value={formData.nanodrop_ratio}
                 onChange={handleChange}
+                marginBottom={4}
               />
               <FormLabel>Extraction Number</FormLabel>
               <Input
@@ -190,9 +206,10 @@ export default function AddEditModal({
                 name="extraction_number"
                 value={formData.extraction_number}
                 onChange={handleChange}
+                marginBottom={4}
               />
               <FormLabel>Extraction Date</FormLabel>
-              <div className="datepicker-div"> 
+              <div className="datepicker-div">
               <DatePicker
                 className="date-picker"
                   selected={
@@ -208,7 +225,7 @@ export default function AddEditModal({
                 />
                 </div>
               <div>
-                <FormLabel>Published</FormLabel>
+                <FormLabel marginTop={4}>Published</FormLabel>
                 <input
                   type="checkbox"
                   name="published"
