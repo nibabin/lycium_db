@@ -16,7 +16,7 @@ export default function Filter(){
         'operator': '',
         'value': '',
     }
-    
+
     const [currentFilters, setCurrentFilters] = useState([
         {
             'type': 'filter',
@@ -180,7 +180,7 @@ export default function Filter(){
             filterRadioOptions: [
                 'equal',
                 'contains',
-                'less', 
+                'less',
                 'greater'
             ],
             sortRadioOptions:[
@@ -289,17 +289,17 @@ export default function Filter(){
             const response = await SpecimenAPI.getFilteredSpecimen(filter)
             setSpecimenData(response)
             toast({
-                title: 'Filtering Successful', 
-                description: 'Successfully filtered specimen data', 
+                title: 'Filtering Successful',
+                description: 'Successfully filtered specimen data',
                 status: 'success',
                 duration: 3000,
                 isClosable: true,
-            
+
             })
         } catch(err){
             toast({
-                title: 'Filtering Error', 
-                description: 'There was an issue filtering, please ensure you have selected all valid options', 
+                title: 'Filtering Error',
+                description: 'There was an issue filtering, please ensure you have selected all valid options',
                 status: 'error',
                 duration: 3000,
                 isClosable: true,
@@ -312,7 +312,17 @@ export default function Filter(){
     const addDefaultFilter = () =>{
         const tempFilter = possibleFilters[0]
         setExistingFilters([...existingFilters, tempFilter])
-        setCurrentFilters([...currentFilters, defaultCurFilter]) 
+        setCurrentFilters([...currentFilters, defaultCurFilter])
+    }
+
+    const removeFilter = () =>{
+        if (currentFilters.length > 1) {
+          const updatedExistingFilters = existingFilters.slice(0, -1);
+          const updatedCurrentFilters = currentFilters.slice(0, -1);
+
+          setExistingFilters(updatedExistingFilters);
+          setCurrentFilters(updatedCurrentFilters);
+        }
     }
 
     const onFilterOptionChange = (type, value, index) =>{
@@ -328,6 +338,7 @@ export default function Filter(){
     return(
         <div className='filter'>
             <Button className colorScheme='teal' onClick={addDefaultFilter}>Add Filter</Button>
+            <Button className colorScheme='teal' onClick={removeFilter}>Remove Filter</Button>
             {existingFilters.map((filter, idx) => (
                 <FilterOption key={idx} index={idx} onChange={onFilterOptionChange} possibleFilters={possibleFilters}/>
             ))}
