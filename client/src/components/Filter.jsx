@@ -7,7 +7,7 @@ import SpecimenAPI from '../../services/SpecimenAPI';
 import { useDataContext } from '../context/DataProvider';
 import { useToast } from '@chakra-ui/react'
 export default function Filter(){
-    const { specimenData, setSpecimenData } = useDataContext();
+    const { specimenData, setSpecimenData, setSpecimenLoading } = useDataContext();
     const toast = useToast()
 
     const defaultCurFilter = {
@@ -283,6 +283,7 @@ export default function Filter(){
         try{
             //setSpecimenData([])
             console.log(currentFilters)
+            setSpecimenLoading(true);
             let filter = {
                 filterParameters: currentFilters
             }
@@ -296,6 +297,7 @@ export default function Filter(){
                 isClosable: true,
 
             })
+            setSpecimenLoading(false);
         } catch(err){
             toast({
                 title: 'Filtering Error',
@@ -304,6 +306,7 @@ export default function Filter(){
                 duration: 3000,
                 isClosable: true,
             });
+            setSpecimenLoading(false);
         }
 
 
