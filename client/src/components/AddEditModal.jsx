@@ -116,10 +116,10 @@ export default function AddEditModal({
                     })
                   }
                   dateFormat="yyyy-MM-dd"
-                  marginBottom={4}
+
                 />
                 </div>
-              <FormLabel>Provenance</FormLabel>
+              <FormLabel marginTop={4}>Provenance</FormLabel>
 
               <Input
                 type="text"
