@@ -316,13 +316,10 @@ export default function Filter(){
     }
 
     const removeFilter = () =>{
-        if (currentFilters.length > 1) {
-          const updatedExistingFilters = existingFilters.slice(0, -1);
-          const updatedCurrentFilters = currentFilters.slice(0, -1);
-
-          setExistingFilters(updatedExistingFilters);
-          setCurrentFilters(updatedCurrentFilters);
-        }
+        const updatedExistingFilters = existingFilters.slice(0, -1);
+        const updatedCurrentFilters = currentFilters.slice(0, -1);
+        setExistingFilters(updatedExistingFilters);
+        setCurrentFilters(updatedCurrentFilters);
     }
 
     const onFilterOptionChange = (type, value, index) =>{
