@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import {
   Button,
-  useToast
+  useToast,
+  Tooltip
 } from '@chakra-ui/react';
 import AddEditModal from './AddEditModal';
 import { EditIcon } from '@chakra-ui/icons';
@@ -44,7 +45,7 @@ export default function EditButton({row}) {
 
   const handleFormSubmit = async (formData) =>{
     for (const key in formData) {
-      if (formData.hasOwnProperty(key)) { 
+      if (formData.hasOwnProperty(key)) {
         const value = formData[key];
         if (value == ''){
           if (key == 'collection_date' || key == 'lat' || key == 'long' || key == 'nanodrop_concentration' || key == 'nanodrop_ratio' || key == 'published' || key == 'extraction_date'){
@@ -63,8 +64,8 @@ export default function EditButton({row}) {
     if (response.success == true){
       handleClose()
       toast({
-          title: 'Edit Successful', 
-          description: 'Successfully edited specimen data', 
+          title: 'Edit Successful',
+          description: 'Successfully edited specimen data',
           status: 'success',
           duration: 3000,
           isClosable: true,
@@ -72,8 +73,8 @@ export default function EditButton({row}) {
     }
     else{
       toast({
-          title: 'Edit Failed', 
-          description: 'Failed to edit specimen data', 
+          title: 'Edit Failed',
+          description: 'Failed to edit specimen data',
           status: 'error',
           duration: 3000,
           isClosable: true,
@@ -84,7 +85,9 @@ export default function EditButton({row}) {
 
   return (
     <div className='edit-button'>
-      <Button colorScheme='teal' onClick={handleOpen}><EditIcon/></Button>
+      <Tooltip hasArrow label="Edit Entry" fontSize="md" openDelay={800}>
+        <Button colorScheme='teal' onClick={handleOpen}><EditIcon/></Button>
+      </Tooltip>
       <AddEditModal isEditing={true} isOpen={isOpen} onClose={handleClose} onSubmit={handleFormSubmit} initialValues={formData} />
     </div>
   );
