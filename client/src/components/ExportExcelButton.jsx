@@ -50,7 +50,7 @@ const exportToCSV = () => {
     };
 
   return (
-    <Tooltip hasArrow label="Exports to Excel-compatible CSV file" fontSize="md" openDelay={1600}>
+    <Tooltip hasArrow label="Exports to Excel-compatible CSV file" fontSize="md" openDelay={800}>
       <Button colorScheme='teal' onClick={exportToCSV}>Export to CSV</Button>
     </Tooltip>
   );
