@@ -33,20 +33,35 @@ function TableView() {
         },
       },
       { accessorKey: 'extraction_number', header: 'Extraction Number' },
-      { accessorKey: 'extraction_date', header: 'Extraction Date',
+      {
+        accessorKey: 'extraction_date',
+        header: 'Extraction Date',
         cell: ({ row }) => {
-          const collectionDate = new Date(row.original.collection_date);
-          return collectionDate.toLocaleDateString();
-        }, },      { accessorKey: 'genus', header: 'Genus' },
+          if (row.original.extraction_date) {
+            const collectionDate = new Date(row.original.extraction_date);
+            return collectionDate.toLocaleDateString();
+          } else {
+            return '';
+          }
+        }
+      },     
+      { accessorKey: 'genus', header: 'Genus' },
       { accessorKey: 'species', header: 'Species' },
       { accessorKey: 'field_pop_id', header: 'Field ID' },
       { accessorKey: 'greenhouse', header: 'Greenhouse' },
       { accessorKey: 'voucher_specimen', header: 'Voucher' },
-      { accessorKey: 'collection_date', header: 'Collection Date',
+      {
+        accessorKey: 'collection_date',
+        header: 'Collection Date',
         cell: ({ row }) => {
-          const collectionDate = new Date(row.original.collection_date);
-          return collectionDate.toLocaleDateString();
-        }, },
+          if (row.original.collection_date) {
+            const collectionDate = new Date(row.original.collection_date);
+            return collectionDate.toLocaleDateString();
+          } else {
+            return '';
+          }
+        }
+      }, 
       { accessorKey: 'provenance', header: 'Provenance' },
       { accessorKey: 'country', header: 'Country' },
       { accessorKey: 'state_provenance', header: 'State' },
@@ -57,7 +72,17 @@ function TableView() {
       { accessorKey: 'material', header: 'Material' },
       { accessorKey: 'nanodrop_concentration', header: 'Nanodrop Concentration' },
       { accessorKey: 'nanodrop_ratio', header: 'Nanodrop Ratio' },
-      { accessorKey: 'published ', header: 'Published' },
+      {
+        accessorKey: 'published',
+        header: 'Published',
+        cell: ({ row }) => {
+          if (row.original.published) {
+            return "True"
+          } else {
+            return 'False';
+          }
+        }
+      }, 
     ],
     []
   );

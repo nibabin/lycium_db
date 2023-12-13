@@ -1,0 +1,72 @@
+CREATE TABLE Genetics(
+	genetics_id SERIAL,
+	genus VARCHAR(100),
+        	species VARCHAR(100),
+        	PRIMARY KEY(genetics_id)
+ );
+
+CREATE TABLE Specimen(
+        	specimen_id SERIAL,
+genetics_id SERIAL,
+	material VARCHAR(100),
+	notes VARCHAR(1000),
+	collection_date DATE,
+	voucher_specimen VARCHAR(100),
+	greenhouse VARCHAR (100),
+	field_pop_id VARCHAR(100),
+	published  BOOLEAN,
+	nanodrop_concentration DOUBLE PRECISION,
+	nanodrop_ratio DOUBLE PRECISION,
+        	PRIMARY KEY (specimen_id),
+        	FOREIGN KEY (genetics_id) REFERENCES Genetics ON DELETE SET NULL
+);
+ 
+CREATE TABLE Location (
+        	location_id SERIAL,
+	specimen_id SERIAL NOT NULL UNIQUE,
+        	provenance VARCHAR(200),
+country VARCHAR(200),
+state_provenance VARCHAR(1000),
+specific_locality VARCHAR(1000),
+lat DOUBLE PRECISION,
+long DOUBLE PRECISION,
+PRIMARY KEY (location_id),
+        	FOREIGN KEY (specimen_id) REFERENCES Specimen ON DELETE CASCADE
+);
+ 
+CREATE TABLE Genomics (
+	genomic_id SERIAL,
+	extraction_number VARCHAR(100),
+	extraction_date DATE,
+	specimen_id SERIAL NOT NULL UNIQUE,
+	PRIMARY KEY (genomic_id),
+FOREIGN KEY (specimen_id) REFERENCES Specimen ON DELETE CASCADE
+);
+
+
+CREATE VIEW SpecimenData AS
+SELECT 
+    Specimen.specimen_id,
+    Genetics.genus,
+    Genetics.species,
+    Specimen.material,
+    Specimen.notes,
+    Specimen.collection_date,
+    Specimen.voucher_specimen,
+    Specimen.greenhouse,
+    Specimen.field_pop_id,
+    Specimen.published,
+    Specimen.nanodrop_concentration,
+    Specimen.nanodrop_ratio,
+    Location.provenance,
+    Location.country,
+    Location.state_provenance,
+    Location.specific_locality,
+    Location.lat,
+    Location.long,
+    Genomics.extraction_number,
+    Genomics.extraction_date
+FROM Specimen
+LEFT JOIN Genetics ON Specimen.genetics_id = Genetics.genetics_id
+LEFT JOIN Location ON Specimen.specimen_id = Location.specimen_id
+LEFT JOIN Genomics ON Specimen.specimen_id = Genomics.specimen_id;

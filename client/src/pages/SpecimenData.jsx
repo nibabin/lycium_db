@@ -44,15 +44,15 @@ export default function SpecimenData() {
       <Text><strong>Collection Date:</strong> {new Date(specimen.collection_date).getDate()} {monthNames[new Date(specimen.collection_date).getMonth()]} {new Date(specimen.collection_date).getFullYear()}</Text>
       <Text><strong>Provenance</strong>: {specimen.provenance}</Text>
       <Text><strong>Country</strong>: {specimen.country}</Text>
-      <Text><strong>State Provenance</strong>: {specimen.state_province}</Text>
+      <Text><strong>State Provenance</strong>: {specimen.state_provenance}</Text>
       <Text><strong>Specific Local</strong>: {specimen.specific_locality}</Text>
-      <Text><strong>Latitude</strong>: {specimen.latitude}</Text>
-      <Text><strong>Longitude</strong>: {specimen.longitude}</Text>
+      <Text><strong>Latitude</strong>: {specimen.lat}</Text>
+      <Text><strong>Longitude</strong>: {specimen.long}</Text>
       <Text><strong>Notes</strong>: {specimen.notes}</Text>
       <Text><strong>Material</strong>: {specimen.material}</Text>
       <Text><strong>Nanodrop Concentration</strong>: {specimen.nanodrop_concentration}</Text>
       <Text><strong>Nanodrop Ratio</strong>: {specimen.nanodrop_ratio}</Text>
-      <Text><strong>Published</strong>: {specimen.published}</Text>
+      <Text><strong>Published</strong>: {specimen.published ? "True" : "False"}</Text>
       <div className="edit-div">
         <EditButton row={specimen} />
         <DeleteButton row={specimen} />

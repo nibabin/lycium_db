@@ -103,7 +103,6 @@ export default function Filter(){
             value: 'collection_date',
             filterRadioOptions: [
                 'equal',
-                'contains',
                 'greater',
                 'less'
             ],
@@ -268,7 +267,6 @@ export default function Filter(){
             value: 'extraction_date',
             filterRadioOptions: [
                 'equal',
-                'contains',
                 'greater',
                 'less'
             ],
