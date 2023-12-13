@@ -7,7 +7,7 @@ import {
   getPaginationRowModel
 } from '@tanstack/react-table'
 import '../css/TableView.css'
-import { Spinner } from '@chakra-ui/react'
+import { Spinner, Button, Select, Input } from '@chakra-ui/react'
 import EditButton from '../components/EditButton';
 import DeleteButton from '../components/DeleteButton';
 import ExportExcelButton from '../components/ExportExcelButton';
@@ -38,8 +38,8 @@ function TableView() {
         header: 'Extraction Date',
         cell: ({ row }) => {
           if (row.original.extraction_date) {
-            const collectionDate = new Date(row.original.extraction_date);
-            return collectionDate.toLocaleDateString();
+            const extractionDate = new Date(row.original.extraction_date);
+            return extractionDate.toLocaleDateString()
           } else {
             return '';
           }
@@ -56,7 +56,7 @@ function TableView() {
         cell: ({ row }) => {
           if (row.original.collection_date) {
             const collectionDate = new Date(row.original.collection_date);
-            return collectionDate.toLocaleDateString();
+            return collectionDate.toLocaleDateString()
           } else {
             return '';
           }
@@ -65,11 +65,22 @@ function TableView() {
       { accessorKey: 'provenance', header: 'Provenance' },
       { accessorKey: 'country', header: 'Country' },
       { accessorKey: 'state_provenance', header: 'State' },
-      { accessorKey: 'specific_locality', header: 'Specific Local' },
+      { 
+        accessorKey: 'specific_locality', 
+        header: 'Specific Local',
+        cell: ({ row }) => {
+          return <div className='wide-col'>{row.original.specific_locality}</div>
+        } 
+      },
       { accessorKey: 'lat', header: 'Latitude' },
       { accessorKey: 'long', header: 'Longitude' },
-      { accessorKey: 'notes', header: 'Notes' },
-      { accessorKey: 'material', header: 'Material' },
+      { 
+        accessorKey: 'notes', 
+        header: 'Notes',
+        cell: ({ row }) => {
+          return <div className='wide-col'>{row.original.notes}</div>
+        } 
+      },      { accessorKey: 'material', header: 'Material' },
       { accessorKey: 'nanodrop_concentration', header: 'Nanodrop Concentration' },
       { accessorKey: 'nanodrop_ratio', header: 'Nanodrop Ratio' },
       {
@@ -164,34 +175,34 @@ function TableView() {
             </tbody>
           </table>
           <div className="table-options-wrapper">
-            <button
+            <Button
               className="table-options-button"
               onClick={() => table.setPageIndex(0)}
               disabled={!table.getCanPreviousPage()}
             >
               {'<<'}
-            </button>
-            <button
+            </Button>
+            <Button
               className="table-options-button"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
               {'<'}
-            </button>
-            <button
+            </Button>
+            <Button
               className="table-options-button"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
             >
               {'>'}
-            </button>
-            <button
+            </Button>
+            <Button
               className="table-options-button"
               onClick={() => table.setPageIndex(table.getPageCount() - 1)}
               disabled={!table.getCanNextPage()}
             >
               {'>>'}
-            </button>
+            </Button>
             <span className="flex items-center gap-1">
               <div>Page</div>
               <strong>

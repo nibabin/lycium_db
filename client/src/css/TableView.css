@@ -44,3 +44,7 @@
     padding: 4px;
     border-radius: 10px;
 }
+
+.wide-col{
+    min-width: 15vw;
+}
