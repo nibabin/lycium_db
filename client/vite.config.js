@@ -17,7 +17,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000'
+        target: 'http://cosc-257-node09.cs.amherst.edu:3000'
       }
     }
   }
