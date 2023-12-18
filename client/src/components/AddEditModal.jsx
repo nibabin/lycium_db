@@ -56,7 +56,7 @@ export default function AddEditModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent minW="50vw" maxW="fit-content">
+      <ModalContent minW="50vw" maxW="50vw">
         <ModalHeader>{isEditing ? 'Edit Specimen' : 'Add Specimen'}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>

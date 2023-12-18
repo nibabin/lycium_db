@@ -4,6 +4,7 @@ import SpecimenAPI from '../../services/SpecimenAPI';
 import { useState, useEffect } from 'react';
 import { useDataContext } from '../context/DataProvider';
 import Filter from '../components/Filter';
+import SpecimenModal from '../components/SpecimenModal';
 
 const apiKey = import.meta.env.REACT_APP_GOOGLE_API_KEY
 
@@ -19,7 +20,8 @@ const center = {
 
 function MapView() {
   const { specimenData, setSpecimenData } = useDataContext();
-  const [markerMap, setMarkerMap] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedSpecimen, setSelectedSpecimen] = useState(null);
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -52,9 +54,17 @@ function MapView() {
     }
   }, [map, specimenData]);
 
+  const markerClick = (s) =>{
+    if (s != null && s!= undefined){
+      setIsModalOpen(true)
+      setSelectedSpecimen(s)
+    }
+  }
+
   
   return (
     <>
+    <SpecimenModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} specimen={selectedSpecimen} />
       <Filter />
       {isLoaded ? (
         <GoogleMap
@@ -70,6 +80,7 @@ function MapView() {
               s.lat && s.long && (
                 <div key={index}>
                     <Marker
+                      onClick={() => markerClick(s)}
                       position={{ lat: s.lat, lng: s.long }}
                       key={index}
                       />

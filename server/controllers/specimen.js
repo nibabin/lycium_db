@@ -33,8 +33,8 @@ const sortStandardizeer = {
  */
 const getFilteredSpecimen = async(req, res) =>{
     try{
-        console.log("starting")
         const params = req.body.filterParameters;
+        const filterType = req.body.filterType;
 
         //define the initial query
         let query = `SELECT * FROM SpecimenData \n`
@@ -51,11 +51,8 @@ const getFilteredSpecimen = async(req, res) =>{
         for (const param of params){
             //apply sorting logic
             const type = param.type
-            console.log(type)
             if(type == 'sort'){
                 const operator = sortStandardizeer[param.operator];
-                console.log("TEST")
-                console.log(operator)
                 const parameter = param.parameter
 
                 
@@ -96,9 +93,9 @@ const getFilteredSpecimen = async(req, res) =>{
                 if(addAnd){
                     //if it's a string
                     if(isNaN(value)){
-                        filterQuery += ` AND ${param.parameter} ${operator} '${value}'`
+                        filterQuery += ` ${filterType} ${param.parameter} ${operator} '${value}'`
                     }else{
-                        filterQuery += ` AND ${param.parameter} ${operator} ${value}`
+                        filterQuery += ` ${filterType} ${param.parameter} ${operator} ${value}`
                     }
                     
                 }else{
@@ -131,7 +128,6 @@ const getFilteredSpecimen = async(req, res) =>{
         console.log(query);
 
         const result = await pool.query(query);
-        console.log(result.rows)
         res.status(200).json(result.rows);
 
     }catch(error){
@@ -191,8 +187,6 @@ const addSpecimen = async(req, res) =>{
             geneticsId = newGeneticsResult.rows[0].genetics_id;
         }
 
-        console.log('gentics id', geneticsId)
-
         //create a specimen with this genetics data
         const specimenQuery = `
         INSERT INTO Specimen (genetics_id, material, notes, collection_date, voucher_specimen, greenhouse, field_pop_id, published, nanodrop_concentration, nanodrop_ratio)
@@ -215,8 +209,6 @@ const addSpecimen = async(req, res) =>{
 
         const specimenId = specimenResult.rows[0].specimen_id;
 
-        console.log('specimen id', specimenId)
-
         //create a location entry for the new specimen
         const locationQuery = `
       INSERT INTO Location (specimen_id, provenance, country, state_provenance, specific_locality, lat, long)
@@ -234,8 +226,6 @@ const addSpecimen = async(req, res) =>{
             formData.long,
         ]);
 
-        console.log('location_id', locationResult.rows[0].location_id)
-
         // handle the string with genomics data
         const extraction_number = formData.extraction_number
         const extraction_date = formData.extraction_date
@@ -251,8 +241,6 @@ const addSpecimen = async(req, res) =>{
             extraction_date,
             specimenId,
         ]);
-
-        console.log('genomic_id', genomicRes.rows[0].genomic_id)
 
         
         return res.status(200).json({ success: true, specimenId });
@@ -274,7 +262,6 @@ const deleteSpecimen = async(req, res) =>{
                         WHERE specimen_id = $1
                     `
         await pool.query(query, [specimen_id])
-        console.log("TEST")
         return res.status(200).json({ success: true, specimen_id });
 
     }catch(error){
@@ -287,8 +274,6 @@ const updateSpecimen = async(req, res) =>{
 
         const specimen_id = req.params.specimen_id
         const formData = req.body
-
-        console.log(formData)
 
         //check if this genetics already exist and if no - create a new one
         const geneticsQuery = 'SELECT genetics_id FROM Genetics WHERE genus = $1 AND species = $2';

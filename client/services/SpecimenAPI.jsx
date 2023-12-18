@@ -1,6 +1,6 @@
 import { request } from '../utilities/api'
 
-const specimenURL = 'http://cosc-257-node09.cs.amherst.edu:3000/specimen'
+const specimenURL = 'http://localhost:3000/specimen'
 
 const getAllSpecimen = () => request('GET', specimenURL)
 const deleteSpecimen = (specimen_id) => request('DELETE', `${specimenURL}/${specimen_id}`)

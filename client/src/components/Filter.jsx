@@ -9,6 +9,7 @@ import { useToast } from '@chakra-ui/react'
 export default function Filter(){
     const { specimenData, setSpecimenData, setSpecimenLoading } = useDataContext();
     const toast = useToast()
+    const [filterType, setFilterType] = useState('AND')
 
     const defaultCurFilter = {
         'type': 'filter',
@@ -279,11 +280,10 @@ export default function Filter(){
 
     const submitFilters = async() =>{
         try{
-            //setSpecimenData([])
-            console.log(currentFilters)
             setSpecimenLoading(true);
             let filter = {
-                filterParameters: currentFilters
+                filterParameters: currentFilters,
+                filterType: filterType
             }
             const response = await SpecimenAPI.getFilteredSpecimen(filter)
             setSpecimenData(response)
@@ -297,6 +297,7 @@ export default function Filter(){
             })
             setSpecimenLoading(false);
         } catch(err){
+            console.log(err)
             toast({
                 title: 'Filtering Error',
                 description: 'There was an issue filtering, please ensure you have selected all valid options',
@@ -335,6 +336,16 @@ export default function Filter(){
     }
     return(
         <div className='filter'>
+            <div className='filter-type'>
+                <Select
+                bg='white'
+                borderColor='teal'
+                color='teal'
+                placeholder='Filter Type' onChange={(e) => setFilterType(e.target.value)} value={filterType}>
+                    <option value="AND">And (meets all query criteria)</option>
+                    <option value="OR">Or (meets any query criteria)</option>
+                </Select>   
+            </div>
             <Button className colorScheme='teal' onClick={addDefaultFilter}>Add Filter</Button>
             <Button className colorScheme='teal' onClick={removeFilter}>Remove Filter</Button>
             {existingFilters.map((filter, idx) => (

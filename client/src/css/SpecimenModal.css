@@ -1,0 +1,13 @@
+.view-cont{
+    padding: 20px;
+    text-align: center;
+}
+
+.view-edit{
+    display: flex;
+    justify-content: center;
+}
+
+.view-edit button{
+    margin: 10px;
+}
